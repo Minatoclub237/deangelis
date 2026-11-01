@@ -11,6 +11,7 @@ document.querySelector('.logo').innerHTML = LOGO_FULL
 document.querySelector('.cel-t').innerHTML = LOGO_SHORT
 document.querySelector('.ft-logo').innerHTML = LOGO_SHORT
 const $ = (s, c = document) => c.querySelector(s), $$ = (s, c = document) => [...c.querySelectorAll(s)]
+const EN = document.documentElement.lang === 'en'
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches
 const MOBILE = matchMedia('(max-width: 820px)').matches
 const rem = (n) => n * parseFloat(getComputedStyle(document.documentElement).fontSize)
@@ -85,22 +86,14 @@ if (!RM) {
 
   // Mission : compteurs + orbites qui s'ouvrent
   ScrollTrigger.create({ trigger: '.stats', start: 'top 92%', once: true, onEnter() {
-    $$('.cnt').forEach((c, i) => gsap.to({ v: 0 }, { v: +c.dataset.to, duration: 1.7 + i * .12, ease: 'power1.out', onUpdate() { c.textContent = this.targets()[0].v.toFixed(+c.dataset.d || 0).replace('.', ',') + (c.dataset.s || '') } }))
+    $$('.cnt').forEach((c, i) => gsap.to({ v: +c.dataset.from || 0 }, { v: +c.dataset.to, duration: 1.7 + i * .12, ease: 'power1.out', onUpdate() { c.textContent = this.targets()[0].v.toFixed(+c.dataset.d || 0).replace('.', ',') + (c.dataset.s || '') } }))
   } })
-  const orb = gsap.timeline({ scrollTrigger: { trigger: '.mission', start: 'top 62%', end: 'top 12%', scrub: .7 } })
-  orb.from('.orb-r', { rotation: -70, ease: 'none', duration: 1 }, 0).from('.o', { rotation: 70, ease: 'none', duration: 1 }, 0)
-    .from('.c4', { scale: .15, transformOrigin: '50% 50%', autoAlpha: 0, ease: 'power1.out', duration: .5 }, 0)
-    .from('.c3', { scale: .2, transformOrigin: '72% 18%', autoAlpha: 0, ease: 'power1.out', duration: .55 }, .1)
-    .from('.c2', { scale: .2, transformOrigin: '76% 18%', autoAlpha: 0, ease: 'power1.out', duration: .6 }, .22)
-    .from('.c1', { scale: .25, transformOrigin: '78% 22%', autoAlpha: 0, ease: 'power1.out', duration: .65 }, .35)
-    .from('.o', { autoAlpha: 0, duration: .25, stagger: .12 }, .2)
   rv($$('.stats > div'), { yPercent: 28, autoAlpha: 0, filter: 'blur(8px)', stagger: .1 }, { trigger: '.stats', start: 'top 104%', end: 'top 62%' })
 
   // Portés par… : blocs qui montent, nets en arrivant, parallaxe interne
   rv('.d-tall', { y: () => rem(11), scale: .93, autoAlpha: .2, filter: 'blur(14px)' }, { start: 'top 118%', end: 'top 34%' })
-  rv('.d-small', { y: () => rem(15), autoAlpha: .15, filter: 'blur(12px)' }, { start: 'top 125%', end: 'top 34%' })
+  rv('.d-wide', { y: () => rem(15), autoAlpha: .15, filter: 'blur(12px)' }, { start: 'top 125%', end: 'top 50%' })
   rv('.d-intro', { y: () => rem(5), autoAlpha: 0 }, { start: 'top 104%', end: 'top 60%' })
-  rv($$('.d-list li'), { y: () => rem(4), autoAlpha: 0, stagger: .14 }, { trigger: '.d-list', start: 'top 104%', end: 'top 68%' })
   $$('.pxw').forEach((w) => gsap.fromTo(w, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: w.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } }))
 
   // Services : chaque carte traverse le ruban en pivotant
@@ -128,8 +121,7 @@ if (!RM) {
   const mb = $('.mach-box'), gl = $('.m-gl')
   gsap.from(mb, { scale: .76, autoAlpha: .35, ease: 'none', scrollTrigger: { trigger: '.mach', start: 'top 92%', end: 'top 8%', scrub: .5 } })
   gsap.set('.m-bl h2 .ln, .m-ch .chip', { autoAlpha: 0 })
-  const bpm = $('#bpm')
-  const mtl = gsap.timeline({ scrollTrigger: { trigger: '.mach', start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true, onUpdate(s) { bpm.textContent = (4 + Math.min(1, s.progress / .7) * .8).toFixed(1).replace('.', ',') } }, defaults: { ease: 'none' } })
+  const mtl = gsap.timeline({ scrollTrigger: { trigger: '.mach', start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true }, defaults: { ease: 'none' } })
   mtl.fromTo('.m-top', { autoAlpha: 0 }, { autoAlpha: 1, duration: .12 }, .05)
     .fromTo('.flare', { autoAlpha: 0, scale: .6 }, { autoAlpha: 1, scale: 1.1, duration: .3 }, .05).to('.flare', { autoAlpha: .15, scale: .8, duration: .35 }, .4)
     .fromTo(gl, { x: 0 }, { x: () => Math.max(0, mb.offsetWidth - gl.offsetWidth - rem(2.8)), duration: .55, ease: 'power1.inOut' }, .22)
@@ -137,9 +129,14 @@ if (!RM) {
     .fromTo('.m-bl h2 .ln', { autoAlpha: 0, yPercent: 60, filter: 'blur(10px)' }, { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', stagger: .06, duration: .16 }, .54)
     .to({}, { duration: .2 }, .8)
 
-  // Instagram
-  rv('.web-r', { autoAlpha: 0, y: () => rem(2.5), filter: 'blur(6px)' }, { trigger: '.web' })
-  rv($$('.web-g article'), { autoAlpha: 0, y: () => rem(4.5), filter: 'blur(9px)', stagger: .12 }, { trigger: '.web-g', start: 'top 112%', end: 'top 74%' })
+  // Galerie : les cartes montent puis la bande glisse avec le scroll
+  rv($('.gt'), { autoAlpha: 0, y: () => rem(7), filter: 'blur(10px)', stagger: .1 }, { trigger: '.gal-w', start: 'top 104%', end: 'top 58%' })
+  if (!MOBILE) { const t = $('.gal-t'); gsap.fromTo(t, { x: () => rem(4) }, { x: () => -(t.scrollWidth - innerWidth + rem(3)), ease: 'none', scrollTrigger: { trigger: '.gal-w', start: 'top bottom', end: 'bottom top', scrub: .7, invalidateOnRefresh: true } }) }
+
+  // Nous trouver : la carte s'ouvre, les repères se posent
+  gsap.from('.acc-map', { scale: .84, autoAlpha: .3, ease: 'none', scrollTrigger: { trigger: '.acc-wrap', start: 'top 100%', end: 'top 44%', scrub: .5 } })
+  if (!MOBILE) gsap.from('.acc-c', { x: () => rem(9), autoAlpha: 0, ease: 'none', scrollTrigger: { trigger: '.acc-wrap', start: 'top 72%', end: 'top 34%', scrub: .5, invalidateOnRefresh: true } })
+  gsap.from('.pin-s > *, .acc-rt, .pin-d > *', { scale: 0, autoAlpha: 0, ease: 'none', stagger: .2, scrollTrigger: { trigger: '.acc-wrap', start: 'top 60%', end: 'top 26%', scrub: .5 } })
 
   // Équipe
   rv($$('.tm'), { autoAlpha: 0, y: () => rem(4), filter: 'blur(9px)', stagger: .08 }, { trigger: '.tm-g', start: 'top 112%', end: 'top 70%' })
@@ -164,37 +161,6 @@ const setTm = (i) => { if (i === tI) return; if (tI >= 0) tmAnim(tms[tI], false)
 tms.forEach((t, i) => { t.addEventListener('mouseenter', () => setTm(i)); t.addEventListener('focus', () => setTm(i)); t.addEventListener('click', () => setTm(i)) })
 $('.tm-g').addEventListener('mouseleave', () => setTm(-1))
 $('#tm-prev').onclick = () => setTm(((tI < 0 ? 0 : tI) - 1 + tms.length) % tms.length); $('#tm-next').onclick = () => setTm((tI + 1) % tms.length)
-
-/* ---------- Histoire : roue des années, photos empilées ---------- */
-const yrs = $$('.years span'), hTxt = $$('.his-t p'), hImg = $$('.his-im img')
-const START = 2 // Ambiance
-const renderYears = (p) => { // p = indice flottant de l'année courante
-  const step = rem(MOBILE ? 2.5 : 1.95), gap = rem(MOBILE ? 3.6 : 2.9)
-  yrs.forEach((y, i) => {
-    const d = i - p, a = Math.min(Math.abs(d), 1), s = d < 0 ? -1 : 1
-    const py = s * (a * gap + Math.max(Math.abs(d) - 1, 0) * step)
-    y.style.transform = `translate3d(0,${py}px,0) scale(${1 - a * .74})`
-    y.style.color = `rgb(${15 + a * 175},${15 + a * 175},${16 + a * 175})`
-  })
-}
-renderYears(START)
-gsap.set(hTxt.slice(1), { autoAlpha: 0 })
-gsap.set(hImg.slice(1), { clipPath: 'inset(100% 0% 0% 0% round 1.8rem)', y: () => rem(4) })
-if (!RM) {
-  const yr = { p: START }
-  const htl = gsap.timeline({ scrollTrigger: { trigger: '.his', start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true }, defaults: { ease: 'none' } })
-  htl.to({}, { duration: .35 }, 0)
-  ;[1, 2].forEach((n) => {
-    const at = .35 + (n - 1) * 1.1
-    htl.to(yr, { p: START + n, duration: .55, ease: 'power1.inOut', onUpdate: () => renderYears(yr.p) }, at)
-      .to(hTxt[n - 1], { autoAlpha: 0, duration: .15 }, at).to(hTxt[n], { autoAlpha: 1, duration: .2 }, at + .3)
-      .to(hImg[n - 1], { y: () => -rem(2.4), duration: .55 }, at)
-      .to(hImg[n], { clipPath: 'inset(0% 0% 0% 0% round 1.8rem)', y: 0, duration: .55 }, at)
-  })
-  htl.to({}, { duration: .4 }, 2.2)
-  gsap.from('.his-st .his-im, .his-pl', { y: () => rem(8), autoAlpha: 0, filter: 'blur(10px)', scrollTrigger: { trigger: '.his', start: 'top 74%', end: 'top 10%', scrub: .6 } })
-  gsap.from('.years, .his-l, .his-q', { autoAlpha: 0, y: () => rem(4), scrollTrigger: { trigger: '.his', start: 'top 70%', end: 'top 12%', scrub: .6 } })
-}
 
 /* ---------- Cellules : boîte de Petri dessinée + vol au scroll ---------- */
 ;(() => {
@@ -241,8 +207,8 @@ positionCard(); document.fonts?.ready.then(positionCard); addEventListener('resi
 $('.ct-f').addEventListener('submit', (e) => {
   e.preventDefault(); const d = new FormData(e.target)
   const body = `${d.get('message') || ''}\n\n${d.get('nom') || ''}\n${d.get('email') || ''}`
-  location.href = `mailto:deangeliscoiffure@gmail.com?subject=${encodeURIComponent(d.get('objet') || 'Demande de rendez-vous')}&body=${encodeURIComponent(body)}`
-  $('.ct-m').textContent = 'Votre messagerie s\'ouvre avec votre message prêt à envoyer.'
+  location.href = `mailto:deangeliscoiffure@gmail.com?subject=${encodeURIComponent(d.get('objet') || (EN ? 'Appointment request' : 'Demande de rendez-vous'))}&body=${encodeURIComponent(body)}`
+  $('.ct-m').textContent = EN ? 'Your email app opens with your message ready to send.' : 'Votre messagerie s\'ouvre avec votre message prêt à envoyer.'
 })
 
 /* ---------- Avis : les cartes montent, pivotent et se distribuent ---------- */
@@ -277,30 +243,19 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !RM) {
   document.documentElement.classList.add('has-cursor')
   const cur = $('.cursor'), qx = gsap.quickTo(cur, 'x', { duration: .25, ease: 'power3' }), qy = gsap.quickTo(cur, 'y', { duration: .25, ease: 'power3' })
   addEventListener('pointermove', (e) => { qx(e.clientX); qy(e.clientY); gsap.set(cur, { opacity: 1 }) })
-  document.addEventListener('pointerover', (e) => gsap.to(cur, { scale: e.target.closest('a,button,input,textarea,.tm,.steps li,.o') ? 1.5 : 1, duration: .25 }))
+  document.addEventListener('pointerover', (e) => gsap.to(cur, { scale: e.target.closest('a,button,input,textarea,.tm,.steps li') ? 1.5 : 1, duration: .25 }))
 }
 
-/* ---------- Menu + recherche ---------- */
-const mBtn = $('.nav-m'), menu = $('#menu'), mq = $('#menu-q')
+/* ---------- Menu ---------- */
+const mBtn = $('.nav-m'), menu = $('#menu')
 function closeMenu() { menu.hidden = true; mBtn.setAttribute('aria-expanded', 'false') }
-const openMenu = (focus) => { menu.hidden = false; mBtn.setAttribute('aria-expanded', 'true'); gsap.from(menu, { y: -12, autoAlpha: 0, duration: .35, ease: 'power3.out', clearProps: 'all' }); if (focus) mq.focus() }
-mBtn.onclick = () => menu.hidden ? openMenu() : closeMenu()
-$('#b-search').onclick = () => menu.hidden ? openMenu(true) : mq.focus()
-mq.oninput = () => $$('a', menu).forEach((a) => { a.hidden = !a.textContent.toLowerCase().includes(mq.value.trim().toLowerCase()) })
+mBtn.onclick = () => { if (!menu.hidden) return closeMenu(); menu.hidden = false; mBtn.setAttribute('aria-expanded', 'true'); gsap.from(menu, { y: -12, autoAlpha: 0, duration: .35, ease: 'power3.out', clearProps: 'all' }) }
 addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu() })
 
-/* ---------- Ambiance sonore (générée, aucun fichier) ---------- */
-const sBtn = $('#b-sound'); let ac, master
-sBtn.onclick = async () => {
-  const on = sBtn.getAttribute('aria-pressed') !== 'true'
-  if (!ac) {
-    ac = new AudioContext(); master = ac.createGain(); master.gain.value = 0
-    const f = ac.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 520; f.connect(master); master.connect(ac.destination)
-    ;[110, 164.8, 220.5].forEach((h) => { const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.value = h; g.gain.value = .05; o.connect(g); g.connect(f); o.start() })
-  }
-  await ac.resume(); master.gain.linearRampToValueAtTime(on ? .5 : 0, ac.currentTime + .6)
-  sBtn.setAttribute('aria-pressed', on)
-}
+/* ---------- Fermetures annoncées : visibles 14 jours avant et pendant (à mettre à jour chaque année) ---------- */
+const closures = [{ from: '2026-08-09', to: '2026-08-31', fr: 'Le salon est fermé du 9 au 31 août 2026.', en: 'The salon is closed from 9 to 31 August 2026.' }]
+const now = Date.now(), closure = closures.find((c) => now >= new Date(c.from).getTime() - 14 * 864e5 && now <= new Date(c.to + 'T23:59:59').getTime())
+if (closure) { const n = $('.notice'); $('span', n).textContent = closure[document.documentElement.lang]; n.hidden = false; $('button', n).onclick = () => { n.hidden = true } }
 
 addEventListener('load', () => ScrollTrigger.refresh())
 document.fonts?.ready.then(() => ScrollTrigger.refresh())

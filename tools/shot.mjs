@@ -10,7 +10,7 @@ const base = join(homedir(), '.cache/puppeteer/chrome'), exe = join(base, readdi
 const b = await puppeteer.launch({ executablePath: exe, headless: true, args: ['--use-angle=d3d11', '--enable-webgl', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader', `--window-size=${+W + 20},${+H + 140}`] })
 const p = await b.newPage(); await p.setViewport({ width: +W, height: +H, deviceScaleFactor: 1 })
 const errs = []; p.on('pageerror', (e) => errs.push(e.message)); p.on('console', (m) => { if (m.type() === 'error') errs.push(m.text()) })
-await p.goto('http://localhost:5980/', { waitUntil: 'networkidle2', timeout: 60000 })
+await p.goto('http://localhost:5980' + (process.env.U || '/'), { waitUntil: 'networkidle2', timeout: 60000 })
 await new Promise((r) => setTimeout(r, 2600))
 const dir = `_raw/shots_${Date.now()}`; mkdirSync(dir, { recursive: true })
 let i = 0
