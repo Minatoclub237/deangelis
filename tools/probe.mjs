@@ -14,11 +14,11 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms)); let n = 0
 const snap = () => p.screenshot({ path: `${dir}/s${String(n++).padStart(2, '0')}.jpg`, type: 'jpeg', quality: 72 })
 const to = async (s, f = 0, d = 1400) => { await p.evaluate((s, f) => { const e = document.querySelector(s), r = e.getBoundingClientRect(); window.scrollTo(0, r.top + scrollY + (r.height - innerHeight) * f) }, s, f); await wait(d) }
 await wait(350); await snap(); await wait(2300); await snap()
-await to('.mission', 0); await snap()
+await to('.ts', 1, 2200); await snap()
 await to('.team', 0); const r = await p.evaluate(() => { const b = document.querySelectorAll('.tm')[0].getBoundingClientRect(); return [b.x + b.width / 2, b.y + b.height / 2] }); await p.mouse.move(...r); await wait(1000); await snap()
 const r2 = await p.evaluate(() => { const b = document.querySelectorAll('.tm')[1].getBoundingClientRect(); return [b.x + b.width / 2, b.y + b.height / 2] }); await p.mouse.move(...r2); await wait(220); await snap()
 await to('.science', 0); const r3 = await p.evaluate(() => { const b = document.querySelectorAll('.steps li')[2].getBoundingClientRect(); return [b.x + 40, b.y + 30] }); await p.mouse.move(...r3); await wait(700); await snap()
-await to('.mach', 1); await snap(); await to('.contact', 1, 2600); await snap()
+await to('.contact', 0, 2600); await snap(); await to('.ft', 0, 1800); await snap()
 console.log('erreurs', errs.length ? errs.slice(0, 5) : 'aucune')
 await p.setViewport({ width: 390, height: 844, deviceScaleFactor: 1, isMobile: true, hasTouch: true }); await p.reload({ waitUntil: 'networkidle2' }); await wait(2500); await snap()
 console.log('mobile débordement x', await p.evaluate(() => document.documentElement.scrollWidth - innerWidth))

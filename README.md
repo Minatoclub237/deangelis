@@ -1,7 +1,9 @@
-# De Angelis — réplique du site « MYDNA » en français
+# De Angelis Coiffure & Beauté — maquette du site
 
 Vite + GSAP/ScrollTrigger + Lenis + Three.js. `npm install` puis `npm run dev` → http://localhost:5980
 
-- `src/dna.js` : hélice d'ADN en particules (temps réel)
-- `tools/studio.js` + `tools/render.mjs` : rendus 3D procéduraux vers `public/img/` (serveur de dev requis)
-- Photos de personnes et de labo : Pexels. Noms, chiffres et coordonnées : contenu fictif repris de la vidéo.
+- `src/lock.js` : mèche torsadée en particules (temps réel)
+- `src/logo.js` : logo recréé d'après l'enseigne, généré par `tools/logo.mjs` (à remplacer par le fichier original du salon)
+- `public/img/s-*`, `t-*`, `a-*` : photos du salon (Google, Facebook, Instagram) ; `x-*` : photos libres Pexels à remplacer par de vraies photos
+
+Sources : fiche Google, Facebook et Instagram du salon, Koifaire, Treatwell, Fresha, La Libre (2018).

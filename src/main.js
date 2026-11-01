@@ -3,9 +3,13 @@ import './style.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
-import { initDNA } from './dna.js'
+import { initLock } from './lock.js'
+import { LOGO_FULL, LOGO_SHORT } from './logo.js'
 
 gsap.registerPlugin(ScrollTrigger)
+document.querySelector('.logo').innerHTML = LOGO_FULL
+document.querySelector('.cel-t').innerHTML = LOGO_SHORT
+document.querySelector('.ft-logo').innerHTML = LOGO_SHORT
 const $ = (s, c = document) => c.querySelector(s), $$ = (s, c = document) => [...c.querySelectorAll(s)]
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches
 const MOBILE = matchMedia('(max-width: 820px)').matches
@@ -56,13 +60,13 @@ $$('.scr').forEach((el) => {
   if (!el.closest('.hero')) ScrollTrigger.create({ trigger: el, start: 'top 94%', once: true, onEnter: () => scramble(el) })
 })
 
-/* ---------- Intro hero + ADN ---------- */
-const dna = initDNA($('#dna'))
-if (RM) dna.uReveal.value = 1
+/* ---------- Intro hero + mèche ---------- */
+const lock = initLock($('#lock'))
+if (RM) lock.uReveal.value = 1
 else {
-  gsap.to(dna.uReveal, { value: 1, duration: 2.1, ease: 'power1.inOut' })
+  gsap.to(lock.uReveal, { value: 1, duration: 2.1, ease: 'power1.inOut' })
   gsap.timeline({ defaults: { ease: 'power3.out' } })
-    .from('.logo span', { x: () => -rem(1.4), autoAlpha: 0, filter: 'blur(6px)', stagger: .06, duration: .7 }, 0)
+    .from('.logo path', { x: () => -rem(.5), autoAlpha: 0, stagger: .025, duration: .6 }, 0)
     .from('.nav-m, .nav-r', { autoAlpha: 0, duration: .7 }, .25)
     .from('.hero h1 .ln', { yPercent: 70, autoAlpha: 0, filter: 'blur(12px)', scaleX: 1.14, transformOrigin: '0 50%', stagger: .13, duration: .95 }, .05)
     .from('.hero-txt .p', { y: 16, autoAlpha: 0, filter: 'blur(7px)', duration: .8 }, .3)
@@ -81,7 +85,7 @@ if (!RM) {
 
   // Mission : compteurs + orbites qui s'ouvrent
   ScrollTrigger.create({ trigger: '.stats', start: 'top 92%', once: true, onEnter() {
-    $$('.cnt').forEach((c, i) => gsap.to({ v: 0 }, { v: +c.dataset.to, duration: 1.7 + i * .12, ease: 'power1.out', onUpdate() { c.textContent = Math.round(this.targets()[0].v) + (c.dataset.s || '').replace('&nbsp;', ' ') } }))
+    $$('.cnt').forEach((c, i) => gsap.to({ v: 0 }, { v: +c.dataset.to, duration: 1.7 + i * .12, ease: 'power1.out', onUpdate() { c.textContent = this.targets()[0].v.toFixed(+c.dataset.d || 0).replace('.', ',') + (c.dataset.s || '') } }))
   } })
   const orb = gsap.timeline({ scrollTrigger: { trigger: '.mission', start: 'top 62%', end: 'top 12%', scrub: .7 } })
   orb.from('.orb-r', { rotation: -70, ease: 'none', duration: 1 }, 0).from('.o', { rotation: 70, ease: 'none', duration: 1 }, 0)
@@ -124,8 +128,8 @@ if (!RM) {
   const mb = $('.mach-box'), gl = $('.m-gl')
   gsap.from(mb, { scale: .76, autoAlpha: .35, ease: 'none', scrollTrigger: { trigger: '.mach', start: 'top 92%', end: 'top 8%', scrub: .5 } })
   gsap.set('.m-bl h2 .ln, .m-ch .chip', { autoAlpha: 0 })
-  const bpm = $('#bpm'), seq = [92, 92, 92, 91, 91, 90, 90, 93]
-  const mtl = gsap.timeline({ scrollTrigger: { trigger: '.mach', start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true, onUpdate(s) { bpm.textContent = seq[Math.min(seq.length - 1, Math.floor(s.progress * seq.length))] } }, defaults: { ease: 'none' } })
+  const bpm = $('#bpm')
+  const mtl = gsap.timeline({ scrollTrigger: { trigger: '.mach', start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true, onUpdate(s) { bpm.textContent = (4 + Math.min(1, s.progress / .7) * .8).toFixed(1).replace('.', ',') } }, defaults: { ease: 'none' } })
   mtl.fromTo('.m-top', { autoAlpha: 0 }, { autoAlpha: 1, duration: .12 }, .05)
     .fromTo('.flare', { autoAlpha: 0, scale: .6 }, { autoAlpha: 1, scale: 1.1, duration: .3 }, .05).to('.flare', { autoAlpha: .15, scale: .8, duration: .35 }, .4)
     .fromTo(gl, { x: 0 }, { x: () => Math.max(0, mb.offsetWidth - gl.offsetWidth - rem(2.8)), duration: .55, ease: 'power1.inOut' }, .22)
@@ -133,7 +137,7 @@ if (!RM) {
     .fromTo('.m-bl h2 .ln', { autoAlpha: 0, yPercent: 60, filter: 'blur(10px)' }, { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', stagger: .06, duration: .16 }, .54)
     .to({}, { duration: .2 }, .8)
 
-  // Webinaires
+  // Instagram
   rv('.web-r', { autoAlpha: 0, y: () => rem(2.5), filter: 'blur(6px)' }, { trigger: '.web' })
   rv($$('.web-g article'), { autoAlpha: 0, y: () => rem(4.5), filter: 'blur(9px)', stagger: .12 }, { trigger: '.web-g', start: 'top 112%', end: 'top 74%' })
 
@@ -163,7 +167,7 @@ $('#tm-prev').onclick = () => setTm(((tI < 0 ? 0 : tI) - 1 + tms.length) % tms.l
 
 /* ---------- Histoire : roue des années, photos empilées ---------- */
 const yrs = $$('.years span'), hTxt = $$('.his-t p'), hImg = $$('.his-im img')
-const START = 2 // 2017
+const START = 2 // Ambiance
 const renderYears = (p) => { // p = indice flottant de l'année courante
   const step = rem(MOBILE ? 2.5 : 1.95), gap = rem(MOBILE ? 3.6 : 2.9)
   yrs.forEach((y, i) => {
@@ -195,19 +199,11 @@ if (!RM) {
 /* ---------- Cellules : boîte de Petri dessinée + vol au scroll ---------- */
 ;(() => {
   const c = $('#dish'), x = c.getContext('2d'), S = c.width, m = S / 2
-  const g = x.createRadialGradient(m, m, m * .1, m, m, m); g.addColorStop(0, '#ffffff66'); g.addColorStop(.86, '#ffffff33'); g.addColorStop(.97, '#ffffffb0'); g.addColorStop(1, '#ffffff00')
+  const g = x.createRadialGradient(m, m, m * .55, m, m, m); g.addColorStop(0, '#ffffff0d'); g.addColorStop(.8, '#ffffff26'); g.addColorStop(.95, '#ffffffb8'); g.addColorStop(1, '#ffffff00')
   x.fillStyle = g; x.beginPath(); x.arc(m, m, m * .98, 0, 7); x.fill()
-  x.strokeStyle = '#ffffffd9'; x.lineWidth = 3; x.beginPath(); x.arc(m, m, m * .93, 0, 7); x.stroke()
-  x.strokeStyle = '#5a6ad0aa'; x.lineWidth = 1.2; x.beginPath(); x.arc(m, m, m * .905, 2.4, 5.2); x.stroke()
-  let n = 0
-  while (n < 520) {
-    const a = Math.random() * 6.283, d = Math.sqrt(Math.random()) * m * .88, cl = Math.sin(a * 3 + d * .03) + Math.sin(d * .045)
-    if (cl < -.2) continue
-    x.fillStyle = ['#3a4dc8', '#5766d8', '#6d5fd6', '#2f3fb4', '#8a84e6'][n % 5]
-    x.globalAlpha = .55 + Math.random() * .45
-    x.beginPath(); x.arc(m + Math.cos(a) * d, m + Math.sin(a) * d, .8 + Math.random() ** 2 * 5.4, 0, 7); x.fill(); n++
-  }
-  x.globalAlpha = 1
+  // Film de savon : reflets irisés sur le pourtour et fenêtre de lumière
+  for (const [a0, a1, col] of [[.3, 1.5, '#f0c9a4cc'], [1.8, 3, '#9fd3dccc'], [3.4, 4.4, '#ffffffe6'], [4.8, 5.9, '#e8b98dcc']]) { x.strokeStyle = col; x.lineWidth = 5; x.beginPath(); x.arc(m, m, m * .92, a0, a1); x.stroke() }
+  x.fillStyle = '#ffffffb3'; x.beginPath(); x.ellipse(m * .62, m * .52, m * .16, m * .07, -.7, 0, 7); x.fill()
   const box = $('.cel-box'), w = () => box.offsetWidth, h = () => box.offsetHeight
   // [x %, y %, échelle] sur quatre poses, relevées sur les images 27,6 s → 29,2 s de la vidéo
   const P = {
@@ -242,7 +238,39 @@ if (!RM) {
 }
 const positionCard = () => { if (!MOBILE) ctT.parentElement.style.setProperty('--ct-top', `${ctT.offsetTop - rem(1)}px`) }
 positionCard(); document.fonts?.ready.then(positionCard); addEventListener('resize', positionCard)
-$('.ct-f').addEventListener('submit', (e) => { e.preventDefault(); $('.ct-m').textContent = 'Maquette : le formulaire n\'est pas encore relié, rien n\'a été envoyé.' })
+$('.ct-f').addEventListener('submit', (e) => {
+  e.preventDefault(); const d = new FormData(e.target)
+  const body = `${d.get('message') || ''}\n\n${d.get('nom') || ''}\n${d.get('email') || ''}`
+  location.href = `mailto:deangeliscoiffure@gmail.com?subject=${encodeURIComponent(d.get('objet') || 'Demande de rendez-vous')}&body=${encodeURIComponent(body)}`
+  $('.ct-m').textContent = 'Votre messagerie s\'ouvre avec votre message prêt à envoyer.'
+})
+
+/* ---------- Avis : les cartes montent, pivotent et se distribuent ---------- */
+if (!RM && !MOBILE) {
+  const tc = $$('.tc'), dx = () => rem(20.9), tRot = [[-16, -4.5], [11, 1.5], [-9, 4.5]]
+  gsap.set('.ts-mq', { autoAlpha: 0 })
+  const ttl = gsap.timeline({ scrollTrigger: { trigger: '.ts', start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true }, defaults: { ease: 'none' } })
+  ttl.to('.ts-mq', { autoAlpha: 1, duration: .25 }, 0)
+  tc.forEach((c, i) => {
+    gsap.set(c, { y: () => innerHeight, rotation: tRot[i][0] })
+    ttl.to(c, { y: () => rem(i === 1 ? -.8 : .4), rotation: i === 1 ? -2 : (i ? 5 : -6), duration: .8, ease: 'power2.out' }, .1 + i * .55)
+    ttl.to(c, { x: () => (i - 1) * dx(), rotation: tRot[i][1], duration: .7, ease: 'power2.inOut' }, 1.75)
+  })
+  ttl.to('.tc-sign', { y: () => -rem(1), duration: .7 }, 1.75).to({}, { duration: .4 }, 2.45)
+  rv('.ts-sc', { autoAlpha: 0, y: () => rem(2) }, { trigger: '.ts', start: 'top 70%', end: 'top 10%' })
+}
+
+ScrollTrigger.create({ trigger: '.ft', start: 'top 5%', end: 'bottom top', toggleClass: { targets: '.nav', className: 'on-dark' } })
+
+/* ---------- Pied de page : le panneau s'ouvre, le logo s'écrit lettre par lettre ---------- */
+if (!RM) {
+  const box = $('.ft-box'), glyphs = $$('.ft-logo path')
+  gsap.from(box, { scale: .84, y: () => rem(6), borderRadius: '6rem', ease: 'none', scrollTrigger: { trigger: '.ft', start: 'top 98%', end: 'top 18%', scrub: .5, invalidateOnRefresh: true } })
+  rv($$('.ft-h .ln'), blurIn, { trigger: '.ft', start: 'top 62%', end: 'top 22%' })
+  rv('.ft-cta', { autoAlpha: 0, x: () => rem(3) }, { trigger: '.ft', start: 'top 54%', end: 'top 18%' })
+  rv($$('.ft-cols > div'), { autoAlpha: 0, y: () => rem(3), filter: 'blur(6px)', stagger: .08 }, { trigger: '.ft', start: 'top 46%', end: 'top 10%' })
+  gsap.from(glyphs, { yPercent: 60, autoAlpha: 0, transformOrigin: '50% 100%', stagger: .03, ease: 'none', scrollTrigger: { trigger: '.ft', start: 'top 34%', end: () => `+=${Math.max(innerHeight * .24, ScrollTrigger.maxScroll(window) - $('.ft').offsetTop + innerHeight * .34 - 4)}`, scrub: .5, invalidateOnRefresh: true } })
+}
 
 /* ---------- Curseur point ---------- */
 if (matchMedia('(hover:hover) and (pointer:fine)').matches && !RM) {
