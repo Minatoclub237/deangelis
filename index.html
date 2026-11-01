@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MYDNA — Laboratoire de diagnostic génétique</title>
+<meta name="description" content="MYDNA, laboratoire de diagnostic génétique : séquençage, oncologie, conseil génétique et accompagnement personnalisé.">
+<link rel="icon" href="data:,">
+<script type="module" src="/src/main.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m16.5 16.5 4.5 4.5" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M6 10v4h3l4 3V7l-4 3H6Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M16 9.5c1 .8 1 4.200 0 5M18.500 8c2 1.800 2 6.200 0 8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1"/><path d="M12 6.500v11M6.500 12h11" stroke="currentColor" stroke-width="1"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 11v4M12 8.500v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.500 9.500v5l4-2.500-4-2.500Z" fill="currentColor"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v15m-6-6 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="m14 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-next2" viewBox="0 0 34 24"><path d="m5 5 7 7-7 7M15 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-ne" viewBox="0 0 24 24"><path d="M6 18 18 6m-9 0h9v9" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="12" r="2.500"/><circle cx="17" cy="6" r="2.500"/><circle cx="17" cy="18" r="2.500"/><path d="m8.200 11 6.600-3.800M8.200 13l6.600 3.800"/></g></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 5 2.500 9.500 12 14l9.500-4.500L12 5ZM6.500 12v4.500c3 2.400 8 2.400 11 0V12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 3 10.500l7 3 3 7L21 3ZM10 13.500 21 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="m5 19 1-4L16 5l3 3L9 18l-4 1Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.500 12 5l8 6.500V19h-5.500v-4.500h-5V19H4v-7.500Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 20c.8-4 3.500-6 7-6s6.200 2 7 6"/></g></symbol>
+  <symbol id="i-atom" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.2"><ellipse cx="12" cy="12" rx="9" ry="3.500" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.500" transform="rotate(-45 12 12)"/></g><circle cx="12" cy="12" r="1.500" fill="currentColor"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M10 4h4M10.500 4v6L5.500 18.500c-.6 1 .1 2 1.200 2h10.600c1.100 0 1.800-1 1.200-2L13.500 10V4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <linearGradient id="g-arrow" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#d9d1fb" stop-opacity=".25"/><stop offset="1" stop-color="#8c76ec"/></linearGradient>
+</defs></svg>
+
+<div class="cursor" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="logo" href="#accueil" aria-label="MYDNA, accueil"><span>M</span><span>Y</span><span>D</span><span>N</span><span>A</span></a>
+  <button class="nav-m" type="button" aria-expanded="false" aria-controls="menu"><i></i><b>Menu</b></button>
+  <div class="nav-r">
+    <button class="ic" id="b-search" type="button" aria-label="Rechercher"><svg><use href="#i-search"/></svg></button>
+    <button class="ic ring" id="b-sound" type="button" aria-label="Activer l'ambiance sonore" aria-pressed="false"><svg><use href="#i-sound"/></svg></button>
+  </div>
+  <nav class="menu" id="menu" hidden>
+    <input type="search" id="menu-q" placeholder="Rechercher une section" aria-label="Rechercher une section">
+    <a href="#mission">Notre mission</a>
+    <a href="#services">Nos services</a>
+    <a href="#science">La science</a>
+    <a href="#avantages">Nos avantages</a>
+    <a href="#webinaires">Webinaires</a>
+    <a href="#equipe">Notre équipe</a>
+    <a href="#histoire">Notre histoire</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+<!-- 01 — Hélice d'ADN temps réel -->
+<section class="hero" id="accueil">
+  <canvas id="dna" aria-hidden="true"></canvas>
+  <div class="hero-txt">
+    <p class="lab upper scr">La raison d'être de MYDNA</p>
+    <h1><span class="ln">Un diagnostic détaillé</span><span class="ln">de votre corps</span></h1>
+    <p class="p">La santé est ce qu'il y a de plus important. Ne la remettez pas à plus tard. Pensez à votre avenir dès aujourd'hui.</p>
+  </div>
+  <div class="hero-btns">
+    <a class="btn btn-o" href="#contact">Prendre rendez-vous</a>
+    <a class="btn btn-d" href="#mission"><svg><use href="#i-down"/></svg><span>Défiler pour la suite</span></a>
+  </div>
+  <article class="hero-card">
+    <b class="n">01</b>
+    <div><p class="lab b">30-08-2022</p><h2>Premier laboratoire central de recherche clinique</h2></div>
+    <p class="p">MYDNA est un laboratoire central mondial de recherche clinique spécialisé en oncologie et en recherche sur le cancer, accrédité par l'Institute of American Medics (IAM) et les Clinical Laboratory Improvement Amendments (CLIA). Il opère dans le monde depuis 2009 et en Europe depuis juin 2021.</p>
+  </article>
+</section>
+
+<div class="mq mq-xl" data-items="Précision santé|Regard génétique|Oncologie" data-o="120"></div>
+
+<!-- 02 — Mission + orbites -->
+<section class="mission" id="mission">
+  <h2 class="h-m rv"><span class="ln">Notre mission : démêler les</span><span class="ln">subtilités de votre code génétique</span><span class="ln">et vous offrir les <g>diagnostics</g></span><span class="ln"><g>les plus détaillés.</g></span></h2>
+  <p class="lab m-lab scr">Les diagnostics de précision MYDNA</p>
+  <div class="stats">
+    <div><b class="cnt" data-to="15">0</b><p class="scr">Années d'expertise</p></div>
+    <div><b class="cnt" data-to="50" data-s="+">0</b><p class="scr">Pays desservis</p></div>
+    <div><b class="cnt" data-to="96" data-s="&nbsp;%">0</b><p class="scr">de fiabilité des diagnostics génétiques</p></div>
+    <div><b class="cnt" data-to="30" data-s="k+">0</b><p class="scr">Clients satisfaits</p></div>
+  </div>
+  <div class="orbit" aria-label="Les six étapes du diagnostic">
+    <div class="orb-r">
+      <i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i>
+      <span class="o" style="--x:74.700%;--y:18%">Traitement et analyse</span>
+      <span class="o" style="--x:59%;--y:38%">Interprétation des données</span>
+      <span class="o" style="--x:33.500%;--y:35%">Consultation diagnostique</span>
+      <span class="o" style="--x:4%;--y:69%">Collaboration et accompagnement</span>
+      <span class="o" style="--x:35.600%;--y:79%">Assurance qualité</span>
+      <span class="o" style="--x:70%;--y:3%">Prélèvement et transport</span>
+    </div>
+  </div>
+</section>
+
+<!-- 03 — Portés par… -->
+<section class="driven">
+  <figure class="d-tall">
+    <div class="pxw"><img src="/img/blob.webp" alt="Structure moléculaire organique aux reflets bleutés" width="1000" height="1460"></div>
+    <div class="d-ics"><span class="gl-ic"><svg><use href="#i-info"/></svg></span><span class="gl-ic"><svg><use href="#i-play"/></svg></span></div>
+    <figcaption class="glass d-team">
+      <span class="avs"><img src="/img/ava1.webp" alt=""><img src="/img/ava2.webp" alt=""><img src="/img/ava3.webp" alt=""></span>
+      <div><p>Rencontrez notre équipe d'experts</p><a class="chip white" href="#equipe">Découvrir</a></div>
+    </figcaption>
+  </figure>
+  <div class="d-intro">
+    <p class="p">Portés par une longue histoire d'expertise et une quête constante d'excellence scientifique</p>
+    <a class="btn btn-d" href="#science">En savoir plus</a>
+  </div>
+  <figure class="d-small">
+    <div class="pxw"><img src="/img/molecule.webp" alt="Molécule chromée en 3D" width="760" height="820"></div>
+    <span class="qm" aria-hidden="true">?</span>
+    <figcaption class="glass d-mol"><p>Une bonne interaction avec les autres molécules</p><a class="chip violet" href="#services">En savoir plus</a></figcaption>
+  </figure>
+  <ul class="d-list">
+    <li><svg><use href="#i-plus"/></svg><h3>Diagnostics inégalés</h3><p class="p">Nous sommes à la pointe de la santé personnalisée et proposons des capacités de diagnostic inégalées.</p></li>
+    <li><svg><use href="#i-plus"/></svg><h3>Portée mondiale</h3><p class="p">MYDNA n'a cessé d'étendre sa présence pour répondre à l'évolution des besoins de santé dans le monde.</p></li>
+    <li><svg><use href="#i-plus"/></svg><h3>Excellence en recherche</h3><p class="p">MYDNA excelle dans la recherche en oncologie, avec les accréditations IAM et CLIA.</p></li>
+  </ul>
+</section>
+
+<!-- 04 — Services : cartes qui traversent le ruban -->
+<section class="svc" id="services">
+  <div class="svc-st">
+    <div class="mq mq-v" data-items="Services de précision|Soins personnalisés|Résultats d'experts" data-o="40"></div>
+    <article class="sc"><div class="sc-i"><img src="/img/dish.webp" alt="Boîte de Petri et cellules bleues" loading="lazy"><span class="gl-ic"><svg><use href="#i-pen"/></svg></span></div><div class="sc-t"><h3>Bilan de santé génétique</h3><a class="chip" href="#contact">Services</a></div></article>
+    <article class="sc"><div class="sc-i"><img src="/img/capsule.webp" alt="Capsule de verre" loading="lazy"><span class="gl-ic"><svg><use href="#i-home"/></svg></span></div><div class="sc-t"><h3>Tests génétiques en oncologie</h3><a class="chip" href="#contact">Services</a></div></article>
+    <article class="sc"><div class="sc-i"><img src="/img/tray.webp" alt="Plateau de puits en verre" loading="lazy"><span class="gl-ic"><svg><use href="#i-atom"/></svg></span></div><div class="sc-t"><h3>Conseil génétique</h3><a class="chip" href="#contact">Services</a></div></article>
+  </div>
+</section>
+
+<!-- 05 — La science -->
+<section class="science" id="science">
+  <h2 class="h-xl rv"><span class="ln">La science derrière</span><span class="ln">nos services</span></h2>
+  <div class="sci-r">
+    <div class="sci-ics"><span class="sm-ic"><svg><use href="#i-info"/></svg></span><span class="sm-ic"><svg><use href="#i-play"/></svg></span></div>
+    <a class="btn btn-o" href="#contact">Prendre rendez-vous</a>
+  </div>
+  <p class="sci-p rv"><span class="ln">Pionniers de l'<g>innovation en santé</g>, nous</span><span class="ln">mobilisons des technologies de pointe,</span><span class="ln"><g>du séquençage génomique à l'analyse par IA.</g></span></p>
+  <div class="sci-nav"><button type="button" id="sci-prev" aria-label="Étape précédente"><svg><use href="#i-prev"/></svg></button><button type="button" id="sci-next" aria-label="Étape suivante"><svg><use href="#i-next2"/></svg></button></div>
+  <ol class="steps">
+    <li class="on"><i></i><p>Analyser la <em>séquence ADN complète</em> pour identifier les <em>variations</em> et prédispositions génétiques.</p></li>
+    <li><i></i><p>Séquençage à <em>haut débit</em> pour une <em>analyse génomique</em> détaillée.</p></li>
+    <li><i></i><p><em>Logiciels et algorithmes</em> pour traiter et interpréter les <em>données biologiques.</em></p></li>
+    <li><i></i><p>Apprentissage automatique et <em>modèles d'IA</em> pour l'analyse prédictive.</p></li>
+    <li><i></i><p>Des algorithmes qui <em>s'affinent avec le temps</em> pour une meilleure prédiction des risques.</p></li>
+    <li><i></i><p>Plateformes de <em>santé à distance</em> pour la consultation et le suivi.</p></li>
+  </ol>
+</section>
+
+<!-- 06 — Avantages -->
+<section class="adv" id="avantages">
+  <p class="p adv-l scr">Votre santé, notre expertise</p>
+  <h2 class="h-xl adv-t rv"><span class="ln">Nos avantages</span></h2>
+  <div class="adv-g">
+    <article class="ad"><span class="chip">Avantages</span><svg class="ad-ar" viewBox="0 0 24 24"><path d="M3 21 21 3M7 3h14v14" fill="none" stroke="url(#g-arrow)" stroke-width="1.5"/></svg><h3>Solutions de santé personnalisées</h3><div class="ad-b"><span class="ad-n">01</span><a class="chip" href="#contact">explorer</a><span class="sm-ic"><svg><use href="#i-person"/></svg></span></div></article>
+    <article class="ad"><span class="chip">Avantages</span><svg class="ad-ar" viewBox="0 0 24 24"><path d="M3 21 21 3M7 3h14v14" fill="none" stroke="url(#g-arrow)" stroke-width="1.5"/></svg><h3>Précision et fiabilité</h3><div class="ad-b"><span class="ad-n">02</span><a class="chip" href="#contact">explorer</a><span class="sm-ic"><svg><use href="#i-atom"/></svg></span></div></article>
+    <article class="ad"><span class="chip">Avantages</span><svg class="ad-ar" viewBox="0 0 24 24"><path d="M3 21 21 3M7 3h14v14" fill="none" stroke="url(#g-arrow)" stroke-width="1.5"/></svg><h3>Innovation scientifique</h3><div class="ad-b"><span class="ad-n">03</span><a class="chip" href="#contact">explorer</a><span class="sm-ic"><svg><use href="#i-flask"/></svg></span></div></article>
+  </div>
+</section>
+
+<!-- 07 — Machine + carte de verre -->
+<section class="mach">
+  <div class="mach-st">
+    <div class="mach-box">
+      <img src="/img/machine.webp" alt="Bras robotisé de laboratoire" loading="lazy">
+      <i class="flare" aria-hidden="true"></i>
+      <div class="m-top"><a class="chip white up" href="#">Télécharger l'appli</a><a class="chip white up" href="#contact">Prendre rendez-vous</a></div>
+      <div class="m-bl">
+        <div class="m-ch"><a class="chip white up" href="#contact">Faire un bilan complet</a><a class="chip white up" href="#contact">Protéger votre santé</a></div>
+        <h2><span class="ln">Votre source de savoir</span><span class="ln">et d'informations</span></h2>
+      </div>
+      <aside class="m-gl glass">
+        <div class="m-gl-t"><div><p class="s">Fréquence cardiaque</p><h3>Rythme moyen</h3><p class="d">La cause des palpitations cardiaques est une tachycardie héréditaire.</p></div><span class="dots">•••</span></div>
+        <svg class="pulse" viewBox="0 0 160 110" aria-hidden="true"><path pathLength="1" d="M0 70h40l6-8 6 8h12l9-58 12 92 8-34h67" fill="none" stroke="#8f7bea" stroke-width="1.2"/><circle cx="73" cy="12" r="2.600" fill="#8f7bea"/><circle cx="73" cy="12" r="5.500" fill="none" stroke="#8f7bea" stroke-opacity=".4"/><text x="82" y="15" font-size="9" fill="#555">Pic</text></svg>
+        <p class="bpm"><b id="bpm">92</b> bpm</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 08 — Webinaires -->
+<section class="web" id="webinaires">
+  <h2 class="h-m rv"><span class="ln">Nos <v>webinaires éducatifs</v></span><span class="ln">sont une ressource précieuse</span><span class="ln">pour qui souhaite approfondir</span><span class="ln">ces sujets.</span></h2>
+  <div class="web-r"><p class="web-lab"><span class="sm-ic"><svg><use href="#i-cap"/></svg></span><span class="scr">Webinaires éducatifs</span></p><a class="btn btn-v" href="#contact">Voir tout</a></div>
+  <div class="web-g">
+    <article><div class="th"><img src="/img/orb.webp" alt="" loading="lazy"><span class="th-a"><svg><use href="#i-ne"/></svg></span></div><h3>Introduction à la santé génétique</h3><p>Les bases de la génétique et l'influence des gènes sur la santé.</p></article>
+    <article><div class="th"><img src="/img/web2.webp" alt="" loading="lazy"><span class="th-a"><svg><use href="#i-ne"/></svg></span></div><h3>Génétique du cancer et évaluation des risques</h3><p>Les facteurs génétiques qui contribuent à divers cancers.</p></article>
+    <article><div class="th"><img src="/img/silk.webp" alt="" loading="lazy"><span class="th-a"><svg><use href="#i-ne"/></svg></span></div><h3>Tests génétiques et projet familial</h3><p>Le rôle des tests génétiques dans le projet d'enfant.</p></article>
+  </div>
+</section>
+
+<!-- 09 — Équipe -->
+<section class="team" id="equipe">
+  <div class="team-h"><h2 class="h-xl rv"><span class="ln">Notre équipe</span></h2><div class="sci-nav"><button type="button" id="tm-prev" aria-label="Personne précédente"><svg><use href="#i-prev"/></svg></button><button type="button" id="tm-next" aria-label="Personne suivante"><svg><use href="#i-next2"/></svg></button></div></div>
+  <div class="tm-g">
+    <article class="tm" tabindex="0"><img class="tm-ph" src="/img/team1.webp" alt="Portrait de Juliet Walker" loading="lazy" style="object-position:50% 8%"><div class="tm-b"><h3>Juliet Walker</h3><p class="r">Directrice de recherche</p><p class="t">En tant que directrice de recherche, Juliet guide les efforts de recherche de MYDNA.</p></div><div class="tm-gl"><h3>Juliet Walker</h3><p class="r">Directrice de recherche</p><p class="t">En tant que directrice de recherche, Juliet guide les efforts de recherche de MYDNA.</p></div></article>
+    <article class="tm" tabindex="0"><img class="tm-ph" src="/img/team2.webp" alt="Portrait de la Dre Sarah Mitchell" loading="lazy" style="object-position:50% 12%"><div class="tm-b"><h3>Dre Sarah Mitchell</h3><p class="r">Généticienne en chef</p><p class="t">La Dre Mitchell est la dirigeante visionnaire de MYDNA : elle supervise la recherche et les initiatives de diagnostic.</p></div><div class="tm-gl"><h3>Dre Sarah Mitchell</h3><p class="r">Généticienne en chef</p><p class="t">La Dre Mitchell est la dirigeante visionnaire de MYDNA : elle supervise la recherche et les initiatives de diagnostic.</p></div></article>
+    <article class="tm" tabindex="0"><img class="tm-ph" src="/img/team3.webp" alt="Portrait de Laura Anderson" loading="lazy" style="object-position:50% 6%"><div class="tm-b"><h3>Laura Anderson</h3><p class="r">Coordinatrice des soins</p><p class="t">Laura veille à ce que chaque client reçoive l'accompagnement et les conseils nécessaires à son parcours de santé.</p></div><div class="tm-gl"><h3>Laura Anderson</h3><p class="r">Coordinatrice des soins</p><p class="t">Laura veille à ce que chaque client reçoive l'accompagnement et les conseils nécessaires à son parcours de santé.</p></div></article>
+    <article class="tm" tabindex="0"><img class="tm-ph" src="/img/team4.webp" alt="Portrait de la Dre Emily Davis" loading="lazy" style="object-position:50% 10%"><div class="tm-b"><h3>Dre Emily Davis</h3><p class="r">Spécialiste clinique</p><p class="t">La Dre Davis est une spécialiste clinique chevronnée qui interprète les données génétiques pour les clients.</p></div><div class="tm-gl"><h3>Dre Emily Davis</h3><p class="r">Spécialiste clinique</p><p class="t">La Dre Davis est une spécialiste clinique chevronnée qui interprète les données génétiques pour les clients.</p></div></article>
+  </div>
+</section>
+
+<!-- 10 — Histoire : roue des années -->
+<section class="his" id="histoire">
+  <div class="his-st">
+    <div class="mq mq-xl mq-alt" data-items="Votre santé, notre force|Votre santé, notre force" data-o="60"></div>
+    <p class="p his-l">Notre histoire</p>
+    <div class="years" aria-hidden="true"><span>2009</span><span>2012</span><span>2017</span><span>2018</span><span>2019</span><span>2020</span><span>2023</span></div>
+    <div class="his-t">
+      <p>Nous sommes reconnus pour notre précision et établissons de nouvelles normes dans le secteur.</p>
+      <p>MYDNA devient un acteur de référence dans le domaine de la pharmacogénomique.</p>
+      <p>MYDNA étend ses activités à l'Europe et ouvre un laboratoire de pointe dans une grande ville européenne.</p>
+    </div>
+    <div class="his-pl" aria-hidden="true"></div>
+    <div class="his-im">
+      <img src="/img/h17.webp" alt="Médecin de profil, stéthoscope autour du cou" loading="lazy">
+      <img src="/img/h18.webp" alt="Main robotisée blanche" loading="lazy">
+      <img src="/img/h19.webp" alt="Mains d'un médecin tenant un stéthoscope" loading="lazy">
+    </div>
+    <a class="his-q" href="#contact"><svg><use href="#i-share"/></svg><img src="/img/ava4.webp" alt=""><span>Une<br>question&nbsp;?</span></a>
+  </div>
+</section>
+
+<!-- 11 — Cellules : vol au travers du « MYDNA » -->
+<section class="cel">
+  <div class="cel-st">
+    <div class="cel-box">
+      <div class="bl b-cell"><i></i></div>
+      <div class="bl b-haze"><i></i></div>
+      <div class="bl b-pink"><i></i></div>
+      <svg class="bl b-line" viewBox="0 0 400 300" aria-hidden="true"><path d="M20 290C150 230 300 120 380 10" fill="none" stroke="#fff" stroke-width="1.4" opacity=".7"/></svg>
+      <p class="cel-t">MYDNA</p>
+      <div class="bl b-dish"><canvas id="dish" width="640" height="640"></canvas></div>
+      <div class="bl b-blue"><i></i></div>
+      <div class="bl b-vio"><i></i></div>
+      <div class="bl b-blue2"><i></i></div>
+      <div class="bl b-bigblue"><i></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 — Contact -->
+<section class="contact" id="contact">
+  <h2 class="ct-t" aria-label="Contactez-nous">CONTACTEZ-NOUS</h2>
+  <aside class="ct-c"><p>Laboratoire MYDNA</p><p>(555) 123-4567</p><p>mydnalab@gmail.com</p><p>678 Redwood Way, Seattle</p></aside>
+  <form class="ct-f" novalidate>
+    <input name="nom" placeholder="Nom" aria-label="Nom" autocomplete="name">
+    <input name="email" type="email" placeholder="E-mail" aria-label="E-mail" autocomplete="email">
+    <input name="objet" placeholder="Objet" aria-label="Objet">
+    <textarea name="message" placeholder="Message" aria-label="Message"></textarea>
+    <button class="ct-s" type="submit"><svg><use href="#i-send"/></svg><span>Envoyer</span></button>
+    <p class="ct-m" role="status"></p>
+  </form>
+</section>
+</main>
+</body>
+</html>
