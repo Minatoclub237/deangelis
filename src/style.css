@@ -447,3 +447,8 @@ a.chip:hover { background: var(--ink); color: #fff; }
   .notice { left: 1rem; right: 1rem; top: 5.2rem; transform: none; justify-content: space-between; border-radius: 1.6rem; }
 }
 @media (prefers-reduced-motion: reduce) { .pin-d i { animation: none; } }
+@media (max-width: 820px) {
+  .nav-call { display: none; }
+  .nav-m { height: 3.6rem; }
+  .nav-r { margin-top: 0; height: 3.6rem; }
+}
