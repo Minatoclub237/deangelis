@@ -86,14 +86,14 @@ if (!RM) {
 
   // Mission : compteurs + orbites qui s'ouvrent
   ScrollTrigger.create({ trigger: '.stats', start: 'top 92%', once: true, onEnter() {
-    $$('.cnt').forEach((c, i) => gsap.to({ v: +c.dataset.from || 0 }, { v: +c.dataset.to, duration: 1.7 + i * .12, ease: 'power1.out', onUpdate() { c.textContent = this.targets()[0].v.toFixed(+c.dataset.d || 0).replace('.', ',') + (c.dataset.s || '') } }))
+    $$('.cnt').forEach((c, i) => gsap.to({ v: +c.dataset.from || 0 }, { v: +c.dataset.to, duration: 1.7 + i * .12, ease: 'power1.out', onUpdate() { c.textContent = this.targets()[0].v.toFixed(+c.dataset.d || 0).replace('.', EN ? '.' : ',') + (c.dataset.s || '') } }))
   } })
   rv($$('.stats > div'), { yPercent: 28, autoAlpha: 0, filter: 'blur(8px)', stagger: .1 }, { trigger: '.stats', start: 'top 104%', end: 'top 62%' })
 
   // Portés par… : blocs qui montent, nets en arrivant, parallaxe interne
-  rv('.d-tall', { y: () => rem(11), scale: .93, autoAlpha: .2, filter: 'blur(14px)' }, { start: 'top 118%', end: 'top 34%' })
-  rv('.d-wide', { y: () => rem(15), autoAlpha: .15, filter: 'blur(12px)' }, { start: 'top 125%', end: 'top 50%' })
-  rv('.d-intro', { y: () => rem(5), autoAlpha: 0 }, { start: 'top 104%', end: 'top 60%' })
+  rv('.d-tall', { y: () => rem(11), scale: .93, autoAlpha: .2, filter: 'blur(14px)' }, { trigger: '.driven', start: 'top 100%', end: 'top 10%' })
+  rv('.d-wide', { y: () => rem(15), autoAlpha: .15, filter: 'blur(12px)' }, { trigger: '.driven', start: 'top 96%', end: 'top 14%' })
+  rv('.d-intro', { y: () => rem(5), autoAlpha: 0 }, { trigger: '.driven', start: 'top 84%', end: 'top 28%' })
   $$('.pxw').forEach((w) => gsap.fromTo(w, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: w.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } }))
 
   // Services : chaque carte traverse le ruban en pivotant
