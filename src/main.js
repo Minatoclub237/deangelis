@@ -111,7 +111,7 @@ if (!RM) {
 
   // Science
   rv('.sci-r', { autoAlpha: 0, filter: 'blur(8px)' }, { trigger: '.science' })
-  rv('.science > .sci-nav', { autoAlpha: 0 }, { trigger: '.science', start: 'top 76%', end: 'top 40%' })
+  rv('.pr-g', { autoAlpha: 0, y: () => rem(3), filter: 'blur(8px)' }, { trigger: '.science', start: 'top 64%', end: 'top 14%' })
   rv($$('.steps li'), { autoAlpha: 0, y: () => rem(1.6), stagger: .08 }, { trigger: '.science', start: 'top 62%', end: 'top 6%' })
 
   // Avantages
@@ -130,7 +130,7 @@ if (!RM) {
     .to({}, { duration: .2 }, .8)
 
   // Galerie : les cartes montent puis la bande glisse avec le scroll
-  rv($('.gt'), { autoAlpha: 0, y: () => rem(7), filter: 'blur(10px)', stagger: .1 }, { trigger: '.gal-w', start: 'top 104%', end: 'top 58%' })
+  rv($$('.gt'), { autoAlpha: 0, y: () => rem(7), filter: 'blur(10px)', stagger: .1 }, { trigger: '.gal-w', start: 'top 104%', end: 'top 58%' })
   if (!MOBILE) { const t = $('.gal-t'); gsap.fromTo(t, { x: () => rem(4) }, { x: () => -(t.scrollWidth - innerWidth + rem(3)), ease: 'none', scrollTrigger: { trigger: '.gal-w', start: 'top bottom', end: 'bottom top', scrub: .7, invalidateOnRefresh: true } }) }
 
   // Nous trouver : la carte s'ouvre, les repères se posent
@@ -142,9 +142,10 @@ if (!RM) {
   rv($$('.tm'), { autoAlpha: 0, y: () => rem(4), filter: 'blur(9px)', stagger: .08 }, { trigger: '.tm-g', start: 'top 112%', end: 'top 70%' })
 }
 
-/* ---------- Science : étapes ---------- */
+/* ---------- Tarifs : la frise choisit la catégorie ---------- */
 const steps = $$('.steps li'); let sI = 0
-const setStep = (i) => { sI = (i + steps.length) % steps.length; steps.forEach((s, k) => s.classList.toggle('on', k === sI)) }
+const pts = $$('.pt'), phs = $$('.pr-ph img')
+const setStep = (i) => { sI = (i + steps.length) % steps.length; [steps, pts, phs].forEach((l) => l.forEach((s, k) => s.classList.toggle('on', k === sI))) }
 steps.forEach((s, i) => { s.addEventListener('mouseenter', () => setStep(i)); s.addEventListener('click', () => setStep(i)) })
 $('#sci-prev').onclick = () => setStep(sI - 1); $('#sci-next').onclick = () => setStep(sI + 1)
 
@@ -244,6 +245,15 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !RM) {
   const cur = $('.cursor'), qx = gsap.quickTo(cur, 'x', { duration: .25, ease: 'power3' }), qy = gsap.quickTo(cur, 'y', { duration: .25, ease: 'power3' })
   addEventListener('pointermove', (e) => { qx(e.clientX); qy(e.clientY); gsap.set(cur, { opacity: 1 }) })
   document.addEventListener('pointerover', (e) => gsap.to(cur, { scale: e.target.closest('a,button,input,textarea,.tm,.steps li') ? 1.5 : 1, duration: .25 }))
+}
+
+/* ---------- Vidéos : chargées à l'approche, jouées seulement quand elles sont visibles ---------- */
+if (!RM) {
+  const vIO = new IntersectionObserver((es) => es.forEach((e) => {
+    const v = e.target
+    if (e.isIntersecting) { if (!v.src) v.src = (MOBILE && v.dataset.srcM) || v.dataset.src; v.play().catch(() => {}) } else if (v.src) v.pause()
+  }), { rootMargin: '25% 0px' })
+  $$('.vid').forEach((v) => vIO.observe(v))
 }
 
 /* ---------- Menu ---------- */
