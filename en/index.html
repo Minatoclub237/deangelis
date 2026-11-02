@@ -29,6 +29,7 @@
   <button class="nav-m" type="button" aria-expanded="false" aria-controls="menu"><i></i><b>Menu</b></button>
   <div class="nav-r">
     <span class="nav-lang"><a href="/" hreflang="fr">FR</a><a href="/en/" aria-current="true" hreflang="en">EN</a></span>
+    <a class="nav-book" href="#rendez-vous">Book</a>
     <a class="nav-call" href="tel:+3227323222">Call</a>
   </div>
   <nav class="menu" id="menu" hidden>
@@ -39,6 +40,7 @@
     <a href="#pour-tous">For the whole family</a>
     <a href="#avis">Client reviews</a>
     <a href="#acces">Find us</a>
+    <a href="#rendez-vous">Book an appointment</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
@@ -54,7 +56,7 @@
     <p class="p">Custom cuts, colour and hair care, a short walk from Schuman.</p>
   </div>
   <div class="hero-btns">
-    <a class="btn btn-o" href="tel:+3227323222">+32 2 732 32 22</a>
+    <span class="hero-cta"><a class="btn btn-s" href="#rendez-vous">Book an appointment</a><a class="btn btn-o" href="tel:+3227323222">+32 2 732 32 22</a></span>
     <a class="btn btn-d" href="#mission"><svg><use href="#i-down"/></svg><span>Scroll for more</span></a>
   </div>
   <article class="hero-card">
@@ -99,15 +101,15 @@
 <section class="svc" id="services">
   <div class="svc-st">
     <div class="mq mq-v" data-items="Our services|Women, men, children|Rue Franklin 22" data-o="40"></div>
-    <article class="sc"><div class="sc-i"><img src="/img/s-bob.webp" alt="Copper bob, side view" loading="lazy" style="object-position:50% 25%"></div><div class="sc-t"><h3>Custom cuts<small>From €37</small></h3><a class="chip" href="tel:+3227323222">Book</a></div></article>
-    <article class="sc"><div class="sc-i"><video class="vid" data-src="/media/v-red.mp4" poster="/media/v-red.webp" muted loop playsinline preload="none" aria-label="Dark hair with red tones, finished at the salon"></video></div><div class="sc-t"><h3>Colour and highlights<small>From €30</small></h3><a class="chip" href="tel:+3227323222">Book</a></div></article>
-    <article class="sc"><div class="sc-i"><img src="/img/s-brunette.webp" alt="Long brunette hair achieved with keratin extensions" loading="lazy" style="object-position:50% 45%"></div><div class="sc-t"><h3>Keratin extensions<small>On request</small></h3><a class="chip" href="tel:+3227323222">Book</a></div></article>
+    <article class="sc"><div class="sc-i"><img src="/img/s-bob.webp" alt="Copper bob, side view" loading="lazy" style="object-position:50% 25%"></div><div class="sc-t"><h3>Custom cuts<small>From €37</small></h3><a class="chip" href="#rendez-vous" data-book="elle">Book</a></div></article>
+    <article class="sc"><div class="sc-i"><video class="vid" data-src="/media/v-red.mp4" poster="/media/v-red.webp" muted loop playsinline preload="none" aria-label="Dark hair with red tones, finished at the salon"></video></div><div class="sc-t"><h3>Colour and highlights<small>From €30</small></h3><a class="chip" href="#rendez-vous" data-book="couleur">Book</a></div></article>
+    <article class="sc"><div class="sc-i"><img src="/img/s-brunette.webp" alt="Long brunette hair achieved with keratin extensions" loading="lazy" style="object-position:50% 45%"></div><div class="sc-t"><h3>Keratin extensions<small>On request</small></h3><a class="chip" href="#rendez-vous" data-book="lissage">Book</a></div></article>
   </div>
 </section>
 <!-- 05 — Tarifs : la frise choisit la catégorie -->
 <section class="science" id="tarifs">
   <h2 class="h-xl rv"><span class="ln">Our prices,</span><span class="ln">clear and simple</span></h2>
-  <div class="sci-r"><a class="btn btn-o" href="tel:+3227323222">Book an appointment</a></div>
+  <div class="sci-r"><a class="btn btn-s" href="#rendez-vous">Book an appointment</a></div>
   <div class="pr-g">
     <div class="pr-ph"><img class="on" src="/img/s-long.webp" alt="Long, sleek copper hair" loading="lazy"><img class="" src="/img/s-foil.webp" alt="Highlights being applied at the salon" loading="lazy"><img class="" src="/img/s-work.webp" alt="A stylist working on a client at the salon" loading="lazy"><img class="" src="/img/s-shelves.webp" alt="The blue shelves of the salon, products and trophies" loading="lazy"><img class="" src="/img/s-men2.webp" alt="Sharp fade and trimmed beard at the salon" loading="lazy"><img class="" src="/img/s-curly2.webp" alt="Cut on curly hair, back view" loading="lazy"></div>
     <div class="pr-w">
@@ -193,21 +195,50 @@
       <a class="chip" href="https://www.google.com/maps?cid=17760924544134801058" target="_blank" rel="noopener">See on Google</a>
     </div>
     <blockquote class="tc">
-      <span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>
-      <p>“A wonderful hair salon I have been going to for over 16 years! Always top quality. A welcoming, smiling team, always very professional, just like the owners. Excellent colour, highlights, and cuts for women, men and children!”</p>
-      <footer><i>N</i><span><b>Natalia</b><small>Koifaire, April 2022, translated from French</small></span></footer>
+      <span class="tc-q" aria-hidden="true">“</span>
+      <p>“Katarina created a gorgeous mauve colour on my hair, exactly as I wanted. […] You can feel she is passionate about what she does, and it shows in the final result.”</p>
+      <footer><i>C</i><span><b>Carla B.</b><small>Google review, translated from French</small></span></footer>
     </blockquote>
     <blockquote class="tc tc-sign">
-      <span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>
-      <p>“It is so nice to visit this salon, where joy is everywhere, on the faces of the team. And it does not cost an arm and a leg, you leave satisfied. An address to remember!”</p>
-      <footer><i>A</i><span><b>Abdel</b><small>Koifaire, July 2010, translated from French</small></span></footer>
+      <span class="tc-q" aria-hidden="true">“</span>
+      <p>“The best hairdresser I've had in a long time! […] You can go with your eyes closed! (And open them again to admire the most charming Italian smile in town, which lights up even the greyest Brussels days.)”</p>
+      <footer><i>S</i><span><b>Stanislas D.</b><small>Google review, translated from French</small></span></footer>
     </blockquote>
     <blockquote class="tc">
-      <span class="stars tc-v">Verified review</span>
-      <p>“Perfect attention and professionalism. They advised me on my look and I am very happy with the result. They take care of every detail.”</p>
-      <footer><i>C</i><span><b>Client, men's cut</b><small>Treatwell, verified review, translated</small></span></footer>
+      <span class="tc-q" aria-hidden="true">“</span>
+      <p>“I have curly hair and had always been disappointed, but Katarina gave me a really, really beautiful cut and excellent advice. She has that rare ability to know exactly what suits you.”</p>
+      <footer><i>J</i><span><b>Jihen Z.</b><small>Google review, translated from French</small></span></footer>
     </blockquote>
   </div>
+</section>
+
+<!-- 11 bis — Le mur d'avis -->
+<section class="tw" aria-label="More client reviews">
+  <div class="tw-h">
+    <h3 class="h-xl rv"><span class="ln">Katarina, Alberto</span><span class="ln">and the whole team</span></h3>
+    <p class="p">Excerpts from reviews published online. […] marks a cut.</p>
+  </div>
+  <div class="tw-g">
+    <div class="tw-c">
+      <blockquote class="tq"><p>“Everything was perfect from start to finish. A very welcoming salon, a wonderfully kind team and a hairstyle that turned out beautifully!”</p><footer><b>Anaëlle B.</b><small>Google review, translated from French</small></footer></blockquote>
+      <blockquote class="tq tq-s"><p>“Alberto is top master of his craft. I am delighted with the way he cuts my hair. And the atmosphere in the salon is great.”</p><footer><b>Robert C.</b><small>Google review</small></footer></blockquote>
+      <blockquote class="tq"><p>“Impeccable service at a reasonable price. […] They offer coffee or water, and the shampoo always comes with a very pleasant massage. From now on, this will be our favourite hair salon in Brussels.”</p><footer><b>Victoria P.</b><small>Google review, translated from Spanish</small></footer></blockquote>
+      <blockquote class="tq"><p>“Katarina did my cut and blow-dry exactly the way I wanted. Same for my daughter. Excellent value for money. I recommend it.”</p><footer><b>Mireille B.</b><small>Google review, translated from French</small></footer></blockquote>
+    </div>
+    <div class="tw-c">
+      <blockquote class="tq"><p>“Best haircuts I've ever had. The Italian stylist has a fantastic eye for style, and this place is now a must-visit for me whenever I'm in Brussels.”</p><footer><b>Velika S.</b><small>Google review</small></footer></blockquote>
+      <blockquote class="tq"><p>“I felt pampered throughout my appointment. I could sense the care taken to do things (very) well and to satisfy the client. And I appreciated Katarina's punctuality.”</p><footer><b>Mathias L.</b><small>Google review, translated from French</small></footer></blockquote>
+      <blockquote class="tq tq-s"><p>“Top service and very high-quality products. Thank you to Alberto for his unrivalled expertise. I recommend it.”</p><footer><b>Stefania C.</b><small>Google review, translated from French</small></footer></blockquote>
+      <blockquote class="tq"><p>“The young Italian stylist washed my hair twice and was very professional, plus the head massage was a nice touch. […] Great hospitality as well, they offer you coffee, water, or anything you might need.”</p><footer><b>Jaime L.</b><small>Google review</small></footer></blockquote>
+    </div>
+    <div class="tw-c">
+      <blockquote class="tq tq-s"><p>“After years in Brussels and various experiences with hairdressers I would not hesitate to call ‘catastrophic’, finding someone like Alberto was a real godsend.”</p><footer><b>Valentina D.</b><small>Google review, translated from Italian</small></footer></blockquote>
+      <blockquote class="tq"><p>“Katarina cut my hair. I am very happy with the result: she is very kind, very professional and a good listener. Everything I love!”</p><footer><b>Katia M.</b><small>Google review, translated from French</small></footer></blockquote>
+      <blockquote class="tq"><p>“That is the kind of beauty salon experience I was looking for: warm, attentive, and genuinely welcoming. The result: magnificent. Thank you.”</p><footer><b>Jai C.</b><small>Google review</small></footer></blockquote>
+      <blockquote class="tq"><p>“A wonderful hair salon I have been going to for over 16 years! Always top quality. A welcoming, smiling team, always very professional, just like the owners. Excellent colour, highlights, and cuts for women, men and children!”</p><footer><b>Natalia</b><small>Koifaire, April 2022, translated from French</small></footer></blockquote>
+    </div>
+  </div>
+  <div class="tw-f"><a class="btn btn-s" href="#rendez-vous">Book an appointment</a><a class="btn btn-o" href="https://www.google.com/maps?cid=17760924544134801058" target="_blank" rel="noopener">Read all reviews on Google</a></div>
 </section>
 
 <!-- 12 — « De Angelis » : vol au travers des bulles -->
@@ -232,12 +263,12 @@
 <!-- 13 — Contact -->
 <section class="contact" id="contact">
   <h2 class="ct-t" aria-label="Contact us">CONTACT US</h2>
-  <aside class="ct-c"><p>De Angelis Coiffure</p><p><a href="tel:+3227323222">+32 2 732 32 22</a></p><p><a href="mailto:deangeliscoiffure@gmail.com">deangeliscoiffure@gmail.com</a></p><p>Rue Franklin 22, 1000 Brussels</p></aside>
+  <aside class="ct-c"><p>De Angelis Coiffure</p><p><a href="#rendez-vous">Book online</a></p><p><a href="tel:+3227323222">+32 2 732 32 22</a></p><p><a href="mailto:deangeliscoiffure@gmail.com">deangeliscoiffure@gmail.com</a></p><p>Rue Franklin 22, 1000 Brussels</p></aside>
   <form class="ct-f" novalidate>
     <input name="nom" placeholder="Name" aria-label="Name" autocomplete="name">
     <input name="email" type="email" placeholder="E-mail" aria-label="E-mail" autocomplete="email">
-    <input name="objet" placeholder="Prestation souhaitée" aria-label="Prestation souhaitée">
-    <textarea name="message" placeholder="Your message and availability" aria-label="Your message and availability"></textarea>
+    <input name="objet" placeholder="Subject" aria-label="Subject">
+    <textarea name="message" placeholder="Your message" aria-label="Your message"></textarea>
     <button class="ct-s" type="submit"><svg><use href="#i-send"/></svg><span>Send</span></button>
     <p class="ct-m" role="status"></p>
   </form>
@@ -275,14 +306,16 @@
     <div class="ft-top">
       <h2 class="ft-h"><span class="ln">Your next cut</span><span class="ln">starts here.</span></h2>
       <div class="ft-cta">
-        <a class="btn btn-w" href="tel:+3227323222">Call the salon</a>
+        <a class="btn btn-w" href="#rendez-vous">Book an appointment</a>
+        <a class="btn btn-l" href="tel:+3227323222">Call the salon</a>
         <a class="btn btn-l" href="https://www.google.com/maps/dir/?api=1&amp;destination=De+Angelis+Coiffure+%26+Beaut%C3%A9,+Rue+Franklin+22,+1000+Bruxelles" target="_blank" rel="noopener">Directions</a>
       </div>
     </div>
     <div class="ft-cols">
       <div><h3>The salon</h3><p>Rue Franklin 22<br>1000 Brussels</p><p><a href="tel:+3227323222">+32 2 732 32 22</a><br><a href="mailto:deangeliscoiffure@gmail.com">deangeliscoiffure@gmail.com</a></p></div>
       <div><h3>Opening hours</h3><p>Monday to Saturday<br>9 am to 7 pm</p><p>Sunday: closed<br>Annual closure in August</p></div>
-      <div><h3>Explore</h3><p class="ft-nav"><a href="#services">Services</a><a href="#tarifs">Our prices</a><a href="#galerie">Our work</a><a href="#pour-tous">For the whole family</a><a href="#avis">Client reviews</a><a href="#acces">Find us</a><a href="#contact">Contact</a></p></div>
+      <div><h3>Explore</h3><p class="ft-nav"><a href="#services">Services</a><a href="#tarifs">Our prices</a><a href="#galerie">Our work</a><a href="#pour-tous">For the whole family</a><a href="#avis">Client reviews</a><a href="#acces">Find us</a><a href="#rendez-vous">Book an appointment</a>
+    <a href="#contact">Contact</a></p></div>
       <div><h3>Follow</h3><p class="ft-nav"><a href="https://www.instagram.com/deangeliscoiffure/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/De-Angelis-Coiffure-921889347876480" target="_blank" rel="noopener">Facebook</a><a href="https://www.google.com/maps?cid=17760924544134801058" target="_blank" rel="noopener">Google</a></p></div>
     </div>
     <div class="ft-logo" role="img" aria-label="De Angelis, for you"></div>
@@ -290,6 +323,66 @@
   </div>
 </footer>
 
-<div class="mbar"><a href="tel:+3227323222">Call</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=De+Angelis+Coiffure+%26+Beaut%C3%A9,+Rue+Franklin+22,+1000+Bruxelles" target="_blank" rel="noopener">Directions</a></div>
+<!-- Rendez-vous -->
+<dialog class="bk" id="rendez-vous" aria-labelledby="bk-t" data-lenis-prevent>
+  <aside class="bk-l">
+    <div class="bk-logo" aria-hidden="true"></div>
+    <p class="bk-sum"></p>
+    <div class="bk-rc">
+      <div><p class="bk-k">Services</p><ul class="bk-sv"></ul></div>
+      <div><p class="bk-k">Stylist</p><p class="bk-who"></p></div>
+      <div><p class="bk-k">Appointment</p><div class="bk-when"><b class="bk-dn"></b><span class="bk-dl"></span><span class="bk-tm"></span></div></div>
+    </div>
+    <p class="bk-tot"><span>Estimate</span><b></b></p>
+    <p class="bk-n">Prices for guidance only. The salon confirms your appointment by phone or email.</p>
+  </aside>
+  <form class="bk-m" novalidate>
+    <header class="bk-h"><ol class="bk-p"><li>Service</li><li>Date and time</li><li>Your details</li></ol><button class="bk-x" type="button" aria-label="Close">×</button></header>
+    <div class="bk-b">
+      <section class="bk-st" data-s="0">
+        <h2 class="h-m" id="bk-t" tabindex="-1">What would you like done?</h2>
+        <div class="bk-tabs" role="group" aria-label="Categories"><button class="bk-tab" type="button" data-t="elle">Her</button><button class="bk-tab" type="button" data-t="lui">Him</button><button class="bk-tab" type="button" data-t="jeunes">Young people</button><button class="bk-tab" type="button" data-t="couleur">Colour</button><button class="bk-tab" type="button" data-t="lissage">Smoothing</button><button class="bk-tab" type="button" data-t="soins">Treatments and updo</button></div>
+        <div><ul class="bk-ol" data-t="elle"><li><label class="bk-o"><input type="checkbox" name="svc" data-w="17" data-e="28"><i></i><span>Shampoo + blow-dry</span><b class="pr">€17–28</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-w="37" data-e="44"><i></i><span>Shampoo + cut + blow-dry</span><b class="pr">€37–44</b></label></li></ul><ul class="bk-ol" data-t="lui"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="28"><i></i><span>Shampoo, cut, blow-dry</span><b class="pr">€28</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="8"><i></i><span>Beard (clippers)</span><b class="pr">€8</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="15"><i></i><span>Beard (clippers and razor)</span><b class="pr">€15</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="25"><i></i><span>Beard (clippers and razor) + colour</span><b class="pr">€25</b></label></li></ul><ul class="bk-ol" data-t="jeunes"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="24"><i></i><span>Students, under 20</span><b class="pr">€24</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="19"><i></i><span>Children, under 12</span><b class="pr">€19</b></label></li></ul><ul class="bk-ol" data-t="couleur"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="65"><i></i><span>Colour</span><b class="pr">€65</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="70-100"><i></i><span>Highlights (1-2-3 tones)</span><b class="pr">€70–100</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="50-80"><i></i><span>Balayage (1-2-3 tones)</span><b class="pr">€50–80</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="50"><i></i><span>Ombré</span><b class="pr">€50</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="30-60"><i></i><span>Bleaching</span><b class="pr">€30–60</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="30-50"><i></i><span>Glaze (coulage)</span><b class="pr">€30–50</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="10"><i></i><span>Eyebrow tint</span><b class="pr">€10</b></label></li></ul><ul class="bk-ol" data-t="lissage"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="51-71"><i></i><span>Perm</span><b class="pr">€51–71</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="50"><i></i><span>Straightening / relaxer</span><b class="pr">€50</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="150-600"><i></i><span>Brazilian keratin smoothing</span><b class="pr">€150–600</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc"><i></i><span>Keratin extensions</span><b class="pr">On request</b></label></li></ul><ul class="bk-ol" data-t="soins"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="45"><i></i><span>Keratin treatment</span><b class="pr">€45</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="11"><i></i><span>Mask treatment</span><b class="pr">€11</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="40-100"><i></i><span>Updo</span><b class="pr">€40–100</b></label></li></ul></div>
+        <p class="bk-hint">You can choose several services.</p>
+      </section>
+      <section class="bk-st" data-s="1" hidden>
+        <h2 class="h-m" tabindex="-1">With whom, and when?</h2>
+        <fieldset class="bk-g"><legend>Your stylist</legend><div class="bk-cs"><label class="bk-c"><input type="radio" name="who" checked>No preference</label><label class="bk-c"><input type="radio" name="who">Katarina</label><label class="bk-c"><input type="radio" name="who">Alberto</label></div></fieldset>
+        <div class="bk-dt">
+          <div>
+            <div class="bk-mh"><p class="bk-mt" aria-live="polite"></p><button class="bk-mp" type="button" aria-label="Previous month"><svg><use href="#i-prev"/></svg></button><button class="bk-mn" type="button" aria-label="Next month"><svg><use href="#i-prev"/></svg></button></div>
+            <div class="bk-wk" aria-hidden="true"></div>
+            <div class="bk-days"></div>
+          </div>
+          <div>
+            <p class="bk-lb">Preferred time</p>
+            <div class="bk-sl"></div>
+            <p class="bk-hint">The salon confirms this time or offers you the closest one.</p>
+          </div>
+        </div>
+      </section>
+      <section class="bk-st" data-s="2" hidden>
+        <h2 class="h-m" tabindex="-1">How can we reach you?</h2>
+        <div class="bk-fg">
+          <label class="bk-fd"><span>Full name</span><input name="nom" autocomplete="name"></label>
+          <label class="bk-fd"><span>Phone</span><input name="tel" type="tel" inputmode="tel" autocomplete="tel"></label>
+          <label class="bk-fd bk-wide"><span>Email (optional)</span><input name="email" type="email" autocomplete="email"></label>
+          <label class="bk-fd bk-wide"><span>Note (optional)</span><textarea name="note"></textarea></label>
+        </div>
+        <p class="bk-hint">Nothing is stored on this website: your details only go into the email you send to the salon.</p>
+      </section>
+      <section class="bk-st" data-s="3" hidden>
+        <h2 class="h-m" tabindex="-1">Your request is ready</h2>
+        <p class="p">Your email app has just opened with the request already written. Send the email: your appointment is confirmed when the salon replies.</p>
+        <p class="bk-txt"></p>
+        <div class="bk-acts"><a class="btn btn-s bk-again">Reopen the email</a><button class="btn btn-o bk-copy" type="button">Copy my request</button><a class="btn btn-o" href="tel:+3227323222">+32 2 732 32 22</a></div>
+        <p class="bk-hint">Nothing opened? Send your request to deangeliscoiffure@gmail.com or call the salon.</p>
+      </section>
+    </div>
+    <footer class="bk-f"><p class="bk-e" role="status"></p><button class="btn btn-o bk-back" type="button" hidden>Back</button><button class="btn btn-s bk-next" type="submit">Continue</button></footer>
+  </form>
+</dialog>
+
+<div class="mbar"><a href="#rendez-vous">Book</a><a href="tel:+3227323222">Call</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=De+Angelis+Coiffure+%26+Beaut%C3%A9,+Rue+Franklin+22,+1000+Bruxelles" target="_blank" rel="noopener">Directions</a></div>
 </body>
 </html>

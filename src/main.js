@@ -5,11 +5,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 import { initLock } from './lock.js'
 import { LOGO_FULL, LOGO_SHORT } from './logo.js'
+import { initBooking } from './booking.js'
 
 gsap.registerPlugin(ScrollTrigger)
 document.querySelector('.logo').innerHTML = LOGO_FULL
 document.querySelector('.cel-t').innerHTML = LOGO_SHORT
 document.querySelector('.ft-logo').innerHTML = LOGO_SHORT
+document.querySelector('.bk-logo').innerHTML = LOGO_SHORT
 const $ = (s, c = document) => c.querySelector(s), $$ = (s, c = document) => [...c.querySelectorAll(s)]
 const EN = document.documentElement.lang === 'en'
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -25,7 +27,9 @@ if (lenis) {
 const goTo = (el) => lenis ? lenis.scrollTo(el, { duration: 1.4 }) : el.scrollIntoView()
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a[href^="#"]'); if (!a) return
-  e.preventDefault(); const t = a.getAttribute('href').slice(1); if (t) goTo(document.getElementById(t)); closeMenu()
+  e.preventDefault(); const t = a.getAttribute('href').slice(1)
+  if (t === 'rendez-vous') openBooking(a.dataset.book); else if (t) goTo(document.getElementById(t))
+  closeMenu()
 })
 
 /* ---------- Rubans : défilent au temps, accélèrent au scroll ---------- */
@@ -208,7 +212,7 @@ positionCard(); document.fonts?.ready.then(positionCard); addEventListener('resi
 $('.ct-f').addEventListener('submit', (e) => {
   e.preventDefault(); const d = new FormData(e.target)
   const body = `${d.get('message') || ''}\n\n${d.get('nom') || ''}\n${d.get('email') || ''}`
-  location.href = `mailto:deangeliscoiffure@gmail.com?subject=${encodeURIComponent(d.get('objet') || (EN ? 'Appointment request' : 'Demande de rendez-vous'))}&body=${encodeURIComponent(body)}`
+  location.href = `mailto:deangeliscoiffure@gmail.com?subject=${encodeURIComponent(d.get('objet') || (EN ? 'Question from the website' : 'Question depuis le site'))}&body=${encodeURIComponent(body)}`
   $('.ct-m').textContent = EN ? 'Your email app opens with your message ready to send.' : 'Votre messagerie s\'ouvre avec votre message prêt à envoyer.'
 })
 
@@ -225,6 +229,15 @@ if (!RM && !MOBILE) {
   })
   ttl.to('.tc-sign', { y: () => -rem(1), duration: .7 }, 1.75).to({}, { duration: .4 }, 2.45)
   rv('.ts-sc', { autoAlpha: 0, y: () => rem(2) }, { trigger: '.ts', start: 'top 70%', end: 'top 10%' })
+}
+
+/* ---------- Mur d'avis : trois colonnes, trois vitesses ---------- */
+if (!RM && !MOBILE) {
+  $$('.tw-c').forEach((c, i) => {
+    const d = [2.5, 8, 4.5][i]
+    gsap.fromTo(c, { y: () => rem(d) }, { y: () => -rem(d), ease: 'none', scrollTrigger: { trigger: '.tw-g', start: 'top bottom', end: 'bottom top', scrub: .6, invalidateOnRefresh: true } })
+    $$('.tq', c).forEach((q, k) => gsap.from(q, { autoAlpha: 0, rotation: (i + k) % 2 ? 3 : -3, scale: .94, filter: 'blur(6px)', ease: 'none', scrollTrigger: { trigger: q, start: 'top 98%', end: 'top 74%', scrub: .6 } }))
+  })
 }
 
 ScrollTrigger.create({ trigger: '.ft', start: 'top 5%', end: 'bottom top', toggleClass: { targets: '.nav', className: 'on-dark' } })
@@ -269,3 +282,7 @@ if (closure) { const n = $('.notice'); $('span', n).textContent = closure[docume
 
 addEventListener('load', () => ScrollTrigger.refresh())
 document.fonts?.ready.then(() => ScrollTrigger.refresh())
+
+/* ---------- Rendez-vous ---------- */
+const openBooking = initBooking({ EN, RM, lenis, closures })
+if (location.hash === '#rendez-vous') openBooking()

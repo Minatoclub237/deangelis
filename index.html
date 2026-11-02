@@ -29,6 +29,7 @@
   <button class="nav-m" type="button" aria-expanded="false" aria-controls="menu"><i></i><b>Menu</b></button>
   <div class="nav-r">
     <span class="nav-lang"><a href="/" aria-current="true" hreflang="fr">FR</a><a href="/en/" hreflang="en">EN</a></span>
+    <a class="nav-book" href="#rendez-vous">Réserver</a>
     <a class="nav-call" href="tel:+3227323222">Appeler</a>
   </div>
   <nav class="menu" id="menu" hidden>
@@ -39,6 +40,7 @@
     <a href="#pour-tous">Pour toute la famille</a>
     <a href="#avis">Avis clients</a>
     <a href="#acces">Nous trouver</a>
+    <a href="#rendez-vous">Prendre rendez-vous</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
@@ -54,7 +56,7 @@
     <p class="p">Coupes sur mesure, couleurs et soins capillaires, à deux pas de Schuman.</p>
   </div>
   <div class="hero-btns">
-    <a class="btn btn-o" href="tel:+3227323222">+32 2 732 32 22</a>
+    <span class="hero-cta"><a class="btn btn-s" href="#rendez-vous">Prendre rendez-vous</a><a class="btn btn-o" href="tel:+3227323222">+32 2 732 32 22</a></span>
     <a class="btn btn-d" href="#mission"><svg><use href="#i-down"/></svg><span>Défiler pour la suite</span></a>
   </div>
   <article class="hero-card">
@@ -99,15 +101,15 @@
 <section class="svc" id="services">
   <div class="svc-st">
     <div class="mq mq-v" data-items="Nos services|Dames, hommes, enfants|Rue Franklin 22" data-o="40"></div>
-    <article class="sc"><div class="sc-i"><img src="/img/s-bob.webp" alt="Carré cuivré vu de profil" loading="lazy" style="object-position:50% 25%"></div><div class="sc-t"><h3>Coupes sur mesure<small>Dès 37 €</small></h3><a class="chip" href="tel:+3227323222">Réserver</a></div></article>
-    <article class="sc"><div class="sc-i"><video class="vid" data-src="/media/v-red.mp4" poster="/media/v-red.webp" muted loop playsinline preload="none" aria-label="Longueurs brunes aux reflets rouges, résultat au salon"></video></div><div class="sc-t"><h3>Couleurs et mèches<small>Dès 30 €</small></h3><a class="chip" href="tel:+3227323222">Réserver</a></div></article>
-    <article class="sc"><div class="sc-i"><img src="/img/s-brunette.webp" alt="Longueurs brunes obtenues avec des extensions à la kératine" loading="lazy" style="object-position:50% 45%"></div><div class="sc-t"><h3>Extensions à la kératine<small>Sur demande</small></h3><a class="chip" href="tel:+3227323222">Réserver</a></div></article>
+    <article class="sc"><div class="sc-i"><img src="/img/s-bob.webp" alt="Carré cuivré vu de profil" loading="lazy" style="object-position:50% 25%"></div><div class="sc-t"><h3>Coupes sur mesure<small>Dès 37 €</small></h3><a class="chip" href="#rendez-vous" data-book="elle">Réserver</a></div></article>
+    <article class="sc"><div class="sc-i"><video class="vid" data-src="/media/v-red.mp4" poster="/media/v-red.webp" muted loop playsinline preload="none" aria-label="Longueurs brunes aux reflets rouges, résultat au salon"></video></div><div class="sc-t"><h3>Couleurs et mèches<small>Dès 30 €</small></h3><a class="chip" href="#rendez-vous" data-book="couleur">Réserver</a></div></article>
+    <article class="sc"><div class="sc-i"><img src="/img/s-brunette.webp" alt="Longueurs brunes obtenues avec des extensions à la kératine" loading="lazy" style="object-position:50% 45%"></div><div class="sc-t"><h3>Extensions à la kératine<small>Sur demande</small></h3><a class="chip" href="#rendez-vous" data-book="lissage">Réserver</a></div></article>
   </div>
 </section>
 <!-- 05 — Tarifs : la frise choisit la catégorie -->
 <section class="science" id="tarifs">
   <h2 class="h-xl rv"><span class="ln">Nos tarifs,</span><span class="ln">en toute clarté</span></h2>
-  <div class="sci-r"><a class="btn btn-o" href="tel:+3227323222">Prendre rendez-vous</a></div>
+  <div class="sci-r"><a class="btn btn-s" href="#rendez-vous">Prendre rendez-vous</a></div>
   <div class="pr-g">
     <div class="pr-ph"><img class="on" src="/img/s-long.webp" alt="Longue chevelure cuivrée, lisse et brillante" loading="lazy"><img class="" src="/img/s-foil.webp" alt="Mèches en cours de pose au salon" loading="lazy"><img class="" src="/img/s-work.webp" alt="Une coiffeuse travaille les longueurs d'une cliente au salon" loading="lazy"><img class="" src="/img/s-shelves.webp" alt="Les étagères bleues du salon, produits et trophées" loading="lazy"><img class="" src="/img/s-men2.webp" alt="Dégradé net et barbe taillée au salon" loading="lazy"><img class="" src="/img/s-curly2.webp" alt="Coupe sur cheveux bouclés vue de dos" loading="lazy"></div>
     <div class="pr-w">
@@ -193,21 +195,50 @@
       <a class="chip" href="https://www.google.com/maps?cid=17760924544134801058" target="_blank" rel="noopener">Voir sur Google</a>
     </div>
     <blockquote class="tc">
-      <span class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</span>
-      <p>« Un magnifique salon de coiffure dans lequel je vais depuis plus de 16 ans ! Qualité toujours au top. Équipe accueillante et souriante toujours très professionnelle, comme les patrons. Excellent service couleurs, mèches, coupes dames, hommes, enfants ! »</p>
-      <footer><i>N</i><span><b>Natalia</b><small>Koifaire, avril 2022</small></span></footer>
+      <span class="tc-q" aria-hidden="true">“</span>
+      <p>« Katarina a réalisé une magnifique couleur mauve sur mes cheveux, exactement comme je le voulais. […] On sent qu'elle est passionnée par ce qu'elle fait et cela se voit dans le résultat final. »</p>
+      <footer><i>C</i><span><b>Carla B.</b><small>Avis Google</small></span></footer>
     </blockquote>
     <blockquote class="tc tc-sign">
-      <span class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</span>
-      <p>« C'est si bien de se rendre dans ce salon où la joie est partout, au visage de l'équipe. De plus, cela ne coûte même pas les yeux de la tête, on en sort satisfait. Une adresse à retenir ! »</p>
-      <footer><i>A</i><span><b>Abdel</b><small>Koifaire, juillet 2010</small></span></footer>
+      <span class="tc-q" aria-hidden="true">“</span>
+      <p>« Meilleur coiffeur que j'ai eu depuis longtemps ! […] Vous pouvez y aller les yeux fermés ! (Et les rouvrir pour admirer le sourire italien le plus charmant de la ville, qui illumine même les journées les plus grises bruxelloises.) »</p>
+      <footer><i>S</i><span><b>Stanislas D.</b><small>Avis Google</small></span></footer>
     </blockquote>
     <blockquote class="tc">
-      <span class="stars tc-v">Avis vérifié</span>
-      <p>« Une attention et un professionnalisme parfaits. On m'a conseillé sur mon image et je suis très satisfait du résultat. Ils s'occupent de chaque détail. »</p>
-      <footer><i>C</i><span><b>Client, coupe homme</b><small>Treatwell, avis vérifié</small></span></footer>
+      <span class="tc-q" aria-hidden="true">“</span>
+      <p>« J'ai les cheveux bouclés et j'ai toujours été déçue, mais Katarina a su réaliser une très, très belle coupe et me donner d'excellents conseils. Elle a cette capacité rare de savoir ce qui vous convient exactement. »</p>
+      <footer><i>J</i><span><b>Jihen Z.</b><small>Avis Google</small></span></footer>
     </blockquote>
   </div>
+</section>
+
+<!-- 11 bis — Le mur d'avis -->
+<section class="tw" aria-label="Autres avis de clients">
+  <div class="tw-h">
+    <h3 class="h-xl rv"><span class="ln">Katarina, Alberto</span><span class="ln">et toute l'équipe</span></h3>
+    <p class="p">Extraits d'avis publiés en ligne. […] signale un passage coupé.</p>
+  </div>
+  <div class="tw-g">
+    <div class="tw-c">
+      <blockquote class="tq"><p>« Tout était parfait du début à la fin. Un salon très accueillant, une équipe d'une grande gentillesse et une coiffure totalement réussie ! »</p><footer><b>Anaëlle B.</b><small>Avis Google</small></footer></blockquote>
+      <blockquote class="tq tq-s"><p>« Alberto est un vrai maître de son art. Je suis ravi de la façon dont il me coupe les cheveux. Et l'ambiance du salon est excellente. »</p><footer><b>Robert C.</b><small>Avis Google, traduit de l'anglais</small></footer></blockquote>
+      <blockquote class="tq"><p>« Service impeccable à un prix raisonnable. […] Ils offrent du café ou de l'eau, et lors du shampoing, on bénéficie toujours d'un massage très agréable. Désormais, ce sera notre salon de coiffure préféré à Bruxelles. »</p><footer><b>Victoria P.</b><small>Avis Google, traduit de l'espagnol</small></footer></blockquote>
+      <blockquote class="tq"><p>« Katarina m'a fait la coupe et le brushing exactement comme je le souhaitais. Idem pour ma fille. Rapport qualité/prix excellent. Je recommande. »</p><footer><b>Mireille B.</b><small>Avis Google</small></footer></blockquote>
+    </div>
+    <div class="tw-c">
+      <blockquote class="tq"><p>« Les meilleures coupes de ma vie. Le styliste italien a un œil fantastique pour le style, et cette adresse est désormais incontournable pour moi à chaque passage à Bruxelles. »</p><footer><b>Velika S.</b><small>Avis Google, traduit de l'anglais</small></footer></blockquote>
+      <blockquote class="tq"><p>« Je me suis senti choyé durant le temps de mon rendez-vous. J'ai ressenti le souci de (très) bien faire et de satisfaire le client. Enfin, j'ai apprécié la ponctualité de Katarina. »</p><footer><b>Mathias L.</b><small>Avis Google</small></footer></blockquote>
+      <blockquote class="tq tq-s"><p>« Un service de top, des produits de très haute qualité. Merci à Alberto pour son savoir-faire inégalable. Je recommande. »</p><footer><b>Stefania C.</b><small>Avis Google</small></footer></blockquote>
+      <blockquote class="tq"><p>« Le jeune styliste italien m'a lavé les cheveux deux fois, très professionnel, et le massage du crâne est une belle attention. […] Un accueil formidable aussi : on vous offre un café, de l'eau ou tout ce dont vous avez besoin. »</p><footer><b>Jaime L.</b><small>Avis Google, traduit de l'anglais</small></footer></blockquote>
+    </div>
+    <div class="tw-c">
+      <blockquote class="tq tq-s"><p>« Après des années passées à Bruxelles et diverses expériences chez des coiffeurs que je qualifierais sans hésiter de “catastrophiques”, trouver quelqu'un comme Alberto a été une véritable aubaine. »</p><footer><b>Valentina D.</b><small>Avis Google, traduit de l'italien</small></footer></blockquote>
+      <blockquote class="tq"><p>« Madame Katarina m'a coupé les cheveux. Je suis très satisfaite du résultat, elle est très gentille, très professionnelle et à l'écoute. Tout ce que j'aime ! »</p><footer><b>Katia M.</b><small>Avis Google</small></footer></blockquote>
+      <blockquote class="tq"><p>« C'est exactement l'expérience que je cherchais dans un salon de beauté : chaleureuse, attentionnée et sincèrement accueillante. Le résultat : magnifique. Merci. »</p><footer><b>Jai C.</b><small>Avis Google, traduit de l'anglais</small></footer></blockquote>
+      <blockquote class="tq"><p>« Un magnifique salon de coiffure dans lequel je vais depuis plus de 16 ans ! Qualité toujours au top. Équipe accueillante et souriante toujours très professionnelle, comme les patrons. Excellent service couleurs, mèches, coupes dames, hommes, enfants ! »</p><footer><b>Natalia</b><small>Koifaire, avril 2022</small></footer></blockquote>
+    </div>
+  </div>
+  <div class="tw-f"><a class="btn btn-s" href="#rendez-vous">Prendre rendez-vous</a><a class="btn btn-o" href="https://www.google.com/maps?cid=17760924544134801058" target="_blank" rel="noopener">Lire tous les avis sur Google</a></div>
 </section>
 
 <!-- 12 — « De Angelis » : vol au travers des bulles -->
@@ -232,12 +263,12 @@
 <!-- 13 — Contact -->
 <section class="contact" id="contact">
   <h2 class="ct-t" aria-label="Contactez-nous">CONTACTEZ-NOUS</h2>
-  <aside class="ct-c"><p>De Angelis Coiffure</p><p><a href="tel:+3227323222">+32 2 732 32 22</a></p><p><a href="mailto:deangeliscoiffure@gmail.com">deangeliscoiffure@gmail.com</a></p><p>Rue Franklin 22, 1000 Bruxelles</p></aside>
+  <aside class="ct-c"><p>De Angelis Coiffure</p><p><a href="#rendez-vous">Prendre rendez-vous en ligne</a></p><p><a href="tel:+3227323222">+32 2 732 32 22</a></p><p><a href="mailto:deangeliscoiffure@gmail.com">deangeliscoiffure@gmail.com</a></p><p>Rue Franklin 22, 1000 Bruxelles</p></aside>
   <form class="ct-f" novalidate>
     <input name="nom" placeholder="Nom" aria-label="Nom" autocomplete="name">
     <input name="email" type="email" placeholder="E-mail" aria-label="E-mail" autocomplete="email">
-    <input name="objet" placeholder="Prestation souhaitée" aria-label="Prestation souhaitée">
-    <textarea name="message" placeholder="Votre message et vos disponibilités" aria-label="Votre message et vos disponibilités"></textarea>
+    <input name="objet" placeholder="Objet" aria-label="Objet">
+    <textarea name="message" placeholder="Votre message" aria-label="Votre message"></textarea>
     <button class="ct-s" type="submit"><svg><use href="#i-send"/></svg><span>Envoyer</span></button>
     <p class="ct-m" role="status"></p>
   </form>
@@ -275,14 +306,16 @@
     <div class="ft-top">
       <h2 class="ft-h"><span class="ln">Votre prochaine coupe</span><span class="ln">commence ici.</span></h2>
       <div class="ft-cta">
-        <a class="btn btn-w" href="tel:+3227323222">Appeler le salon</a>
+        <a class="btn btn-w" href="#rendez-vous">Prendre rendez-vous</a>
+        <a class="btn btn-l" href="tel:+3227323222">Appeler le salon</a>
         <a class="btn btn-l" href="https://www.google.com/maps/dir/?api=1&amp;destination=De+Angelis+Coiffure+%26+Beaut%C3%A9,+Rue+Franklin+22,+1000+Bruxelles" target="_blank" rel="noopener">Itinéraire</a>
       </div>
     </div>
     <div class="ft-cols">
       <div><h3>Le salon</h3><p>Rue Franklin 22<br>1000 Bruxelles</p><p><a href="tel:+3227323222">+32 2 732 32 22</a><br><a href="mailto:deangeliscoiffure@gmail.com">deangeliscoiffure@gmail.com</a></p></div>
       <div><h3>Horaires</h3><p>Lundi au samedi<br>9 h à 19 h</p><p>Dimanche : fermé<br>Fermeture annuelle en août</p></div>
-      <div><h3>Explorer</h3><p class="ft-nav"><a href="#services">Services</a><a href="#tarifs">Nos tarifs</a><a href="#galerie">Nos réalisations</a><a href="#pour-tous">Pour toute la famille</a><a href="#avis">Avis clients</a><a href="#acces">Nous trouver</a><a href="#contact">Contact</a></p></div>
+      <div><h3>Explorer</h3><p class="ft-nav"><a href="#services">Services</a><a href="#tarifs">Nos tarifs</a><a href="#galerie">Nos réalisations</a><a href="#pour-tous">Pour toute la famille</a><a href="#avis">Avis clients</a><a href="#acces">Nous trouver</a><a href="#rendez-vous">Prendre rendez-vous</a>
+    <a href="#contact">Contact</a></p></div>
       <div><h3>Suivre</h3><p class="ft-nav"><a href="https://www.instagram.com/deangeliscoiffure/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/De-Angelis-Coiffure-921889347876480" target="_blank" rel="noopener">Facebook</a><a href="https://www.google.com/maps?cid=17760924544134801058" target="_blank" rel="noopener">Google</a></p></div>
     </div>
     <div class="ft-logo" role="img" aria-label="De Angelis, for you"></div>
@@ -290,6 +323,66 @@
   </div>
 </footer>
 
-<div class="mbar"><a href="tel:+3227323222">Appeler</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=De+Angelis+Coiffure+%26+Beaut%C3%A9,+Rue+Franklin+22,+1000+Bruxelles" target="_blank" rel="noopener">Itinéraire</a></div>
+<!-- Rendez-vous -->
+<dialog class="bk" id="rendez-vous" aria-labelledby="bk-t" data-lenis-prevent>
+  <aside class="bk-l">
+    <div class="bk-logo" aria-hidden="true"></div>
+    <p class="bk-sum"></p>
+    <div class="bk-rc">
+      <div><p class="bk-k">Prestations</p><ul class="bk-sv"></ul></div>
+      <div><p class="bk-k">Coiffeur</p><p class="bk-who"></p></div>
+      <div><p class="bk-k">Rendez-vous</p><div class="bk-when"><b class="bk-dn"></b><span class="bk-dl"></span><span class="bk-tm"></span></div></div>
+    </div>
+    <p class="bk-tot"><span>Estimation</span><b></b></p>
+    <p class="bk-n">Prix indicatifs. Le salon confirme votre rendez-vous par téléphone ou par e-mail.</p>
+  </aside>
+  <form class="bk-m" novalidate>
+    <header class="bk-h"><ol class="bk-p"><li>Prestation</li><li>Date et heure</li><li>Coordonnées</li></ol><button class="bk-x" type="button" aria-label="Fermer">×</button></header>
+    <div class="bk-b">
+      <section class="bk-st" data-s="0">
+        <h2 class="h-m" id="bk-t" tabindex="-1">Que souhaitez-vous faire ?</h2>
+        <div class="bk-tabs" role="group" aria-label="Catégories"><button class="bk-tab" type="button" data-t="elle">Elle</button><button class="bk-tab" type="button" data-t="lui">Lui</button><button class="bk-tab" type="button" data-t="jeunes">Jeunes</button><button class="bk-tab" type="button" data-t="couleur">Couleur</button><button class="bk-tab" type="button" data-t="lissage">Lissage</button><button class="bk-tab" type="button" data-t="soins">Soins et chignon</button></div>
+        <div><ul class="bk-ol" data-t="elle"><li><label class="bk-o"><input type="checkbox" name="svc" data-w="17" data-e="28"><i></i><span>Shampooing + brushing</span><b class="pr">17 à 28 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-w="37" data-e="44"><i></i><span>Shampooing + coupe + brushing</span><b class="pr">37 à 44 €</b></label></li></ul><ul class="bk-ol" data-t="lui"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="28"><i></i><span>Shampooing, coupe, brushing</span><b class="pr">28 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="8"><i></i><span>Barbe (tondeuse)</span><b class="pr">8 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="15"><i></i><span>Barbe (tondeuse et rasoir)</span><b class="pr">15 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="25"><i></i><span>Barbe (tondeuse et rasoir) + coloration</span><b class="pr">25 €</b></label></li></ul><ul class="bk-ol" data-t="jeunes"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="24"><i></i><span>Étudiants, moins de 20 ans</span><b class="pr">24 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="19"><i></i><span>Enfants, moins de 12 ans</span><b class="pr">19 €</b></label></li></ul><ul class="bk-ol" data-t="couleur"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="65"><i></i><span>Couleur</span><b class="pr">65 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="70-100"><i></i><span>Mèches (1-2-3 tons)</span><b class="pr">70 à 100 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="50-80"><i></i><span>Balayage (1-2-3 tons)</span><b class="pr">50 à 80 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="50"><i></i><span>L'ombré</span><b class="pr">50 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="30-60"><i></i><span>Décoloration</span><b class="pr">30 à 60 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="30-50"><i></i><span>Coulage</span><b class="pr">30 à 50 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="10"><i></i><span>Coloration des sourcils</span><b class="pr">10 €</b></label></li></ul><ul class="bk-ol" data-t="lissage"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="51-71"><i></i><span>Permanente</span><b class="pr">51 à 71 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="50"><i></i><span>Défrisage / relaxeur</span><b class="pr">50 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="150-600"><i></i><span>Lissage brésilien à la kératine</span><b class="pr">150 à 600 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc"><i></i><span>Extensions à la kératine</span><b class="pr">Sur demande</b></label></li></ul><ul class="bk-ol" data-t="soins"><li><label class="bk-o"><input type="checkbox" name="svc" data-p="45"><i></i><span>Soin / traitement à la kératine</span><b class="pr">45 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="11"><i></i><span>Soin masque</span><b class="pr">11 €</b></label></li><li><label class="bk-o"><input type="checkbox" name="svc" data-p="40-100"><i></i><span>Chignon</span><b class="pr">40 à 100 €</b></label></li></ul></div>
+        <p class="bk-hint">Vous pouvez choisir plusieurs prestations.</p>
+      </section>
+      <section class="bk-st" data-s="1" hidden>
+        <h2 class="h-m" tabindex="-1">Avec qui, et quand ?</h2>
+        <fieldset class="bk-g"><legend>Votre coiffeur</legend><div class="bk-cs"><label class="bk-c"><input type="radio" name="who" checked>Sans préférence</label><label class="bk-c"><input type="radio" name="who">Katarina</label><label class="bk-c"><input type="radio" name="who">Alberto</label></div></fieldset>
+        <div class="bk-dt">
+          <div>
+            <div class="bk-mh"><p class="bk-mt" aria-live="polite"></p><button class="bk-mp" type="button" aria-label="Mois précédent"><svg><use href="#i-prev"/></svg></button><button class="bk-mn" type="button" aria-label="Mois suivant"><svg><use href="#i-prev"/></svg></button></div>
+            <div class="bk-wk" aria-hidden="true"></div>
+            <div class="bk-days"></div>
+          </div>
+          <div>
+            <p class="bk-lb">Heure souhaitée</p>
+            <div class="bk-sl"></div>
+            <p class="bk-hint">Le salon confirme cette heure ou vous propose la plus proche.</p>
+          </div>
+        </div>
+      </section>
+      <section class="bk-st" data-s="2" hidden>
+        <h2 class="h-m" tabindex="-1">Comment vous joindre ?</h2>
+        <div class="bk-fg">
+          <label class="bk-fd"><span>Nom et prénom</span><input name="nom" autocomplete="name"></label>
+          <label class="bk-fd"><span>Téléphone</span><input name="tel" type="tel" inputmode="tel" autocomplete="tel"></label>
+          <label class="bk-fd bk-wide"><span>E-mail (facultatif)</span><input name="email" type="email" autocomplete="email"></label>
+          <label class="bk-fd bk-wide"><span>Remarque (facultatif)</span><textarea name="note"></textarea></label>
+        </div>
+        <p class="bk-hint">Rien n'est enregistré sur ce site : vos coordonnées partent uniquement dans l'e-mail que vous envoyez au salon.</p>
+      </section>
+      <section class="bk-st" data-s="3" hidden>
+        <h2 class="h-m" tabindex="-1">Votre demande est prête</h2>
+        <p class="p">Votre messagerie vient de s'ouvrir avec la demande déjà rédigée. Envoyez l'e-mail : votre rendez-vous sera confirmé quand le salon vous répondra.</p>
+        <p class="bk-txt"></p>
+        <div class="bk-acts"><a class="btn btn-s bk-again">Rouvrir l'e-mail</a><button class="btn btn-o bk-copy" type="button">Copier ma demande</button><a class="btn btn-o" href="tel:+3227323222">+32 2 732 32 22</a></div>
+        <p class="bk-hint">Rien ne s'est ouvert ? Envoyez votre demande à deangeliscoiffure@gmail.com ou appelez le salon.</p>
+      </section>
+    </div>
+    <footer class="bk-f"><p class="bk-e" role="status"></p><button class="btn btn-o bk-back" type="button" hidden>Retour</button><button class="btn btn-s bk-next" type="submit">Continuer</button></footer>
+  </form>
+</dialog>
+
+<div class="mbar"><a href="#rendez-vous">Réserver</a><a href="tel:+3227323222">Appeler</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=De+Angelis+Coiffure+%26+Beaut%C3%A9,+Rue+Franklin+22,+1000+Bruxelles" target="_blank" rel="noopener">Itinéraire</a></div>
 </body>
 </html>
