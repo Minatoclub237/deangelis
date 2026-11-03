@@ -41,7 +41,6 @@ const TEXT = {
     <h2>Contenu du site</h2>
     <p>Les tarifs affichés sont repris du panneau du salon et donnés à titre indicatif. Seul le prix confirmé au salon fait foi.</p>
     <p>Les avis sont des extraits publiés en ligne par des clients. Certains sont raccourcis, ce que signale la mention […], ou traduits, ce qui est indiqué sur la carte.</p>
-    <p>La vidéo d'accueil est une illustration créée par intelligence artificielle : elle ne montre ni une cliente ni une réalisation du salon.</p>
     <p>Les textes, photos et vidéos ne peuvent pas être réutilisés sans l'accord du salon ou de leurs auteurs.</p>
   </section>
   <section id="confidentialite">
@@ -88,7 +87,6 @@ const TEXT = {
     <h2>Website content</h2>
     <p>Prices are taken from the salon's price board and given for guidance only. Only the price confirmed at the salon applies.</p>
     <p>Reviews are excerpts published online by clients. Some are shortened, marked […], or translated, as stated on the card.</p>
-    <p>The home page video is an illustration created with artificial intelligence: it shows neither a client nor work by the salon.</p>
     <p>Texts, photos and videos may not be reused without the agreement of the salon or their authors.</p>
   </section>
   <section id="confidentialite">
