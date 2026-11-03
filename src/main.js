@@ -2,14 +2,11 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import Lenis from 'lenis'
-import { LOGO_FULL, LOGO_SHORT } from './logo.js'
 import { initBooking } from './booking.js'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
-document.querySelector('.logo').innerHTML = LOGO_FULL
-document.querySelector('.cel-t').innerHTML = LOGO_SHORT
-document.querySelector('.ft-logo').innerHTML = LOGO_SHORT
-document.querySelector('.bk-logo').innerHTML = LOGO_SHORT
+// Logo ivoire : fonds sombres et vidéo
+document.querySelectorAll('.cel-t, .ft-logo, .bk-logo').forEach((el) => { el.innerHTML = '<img src="/img/logo-w.webp" alt="" width="2338" height="506" loading="lazy" decoding="async">' })
 const $ = (s, c = document) => c.querySelector(s), $$ = (s, c = document) => [...c.querySelectorAll(s)]
 const EN = document.documentElement.lang === 'en'
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -32,7 +29,7 @@ if (lenis) {
   lenis.on('scroll', ScrollTrigger.update)
   gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0)
 }
-const goTo = (el) => lenis ? lenis.scrollTo(el, { duration: 1.4 }) : el.scrollIntoView()
+const goTo = (el) => lenis ? lenis.scrollTo(el, { duration: 1.4, offset: el.matches('.gal-sc') ? 0 : -$('.nav').offsetHeight }) : el.scrollIntoView()
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a[href^="#"]'); if (!a) return
   e.preventDefault(); const t = a.getAttribute('href').slice(1)
@@ -82,7 +79,8 @@ if (RM) { heroV.removeAttribute('autoplay'); heroV.pause() }
 else {
   new IntersectionObserver(([e]) => { if (e.isIntersecting) heroV.play().catch(() => {}); else heroV.pause() }).observe(heroV)
   intro.from('.hero-m', { autoAlpha: 0, scale: 1.05, duration: 1.5 }, 0)
-    .from('.logo path', { x: () => -rem(.5), autoAlpha: 0, stagger: .025, duration: .6 }, .1)
+    .from('.logo', { x: () => -rem(.5), autoAlpha: 0, duration: .7 }, .1)
+    .from('.menu a', { y: -8, autoAlpha: 0, stagger: .04, duration: .5 }, .35)
     .from('.nav-m, .nav-r', { autoAlpha: 0, duration: .7 }, .3)
     .from(splitWords('.hero h1'), { yPercent: 118, rotation: 6, transformOrigin: '0 100%', color: '#b8733f', stagger: .07, duration: 1.1, ease: 'power4.out' }, .15)
     .from('.hero-txt .p', { y: 16, autoAlpha: 0, duration: .8 }, .55)
@@ -109,11 +107,11 @@ if (!RM) {
   ScrollTrigger.create({ trigger: '.stats', start: 'top 92%', once: true, onEnter() {
     $$('.cnt').forEach((c, i) => gsap.to({ v: +c.dataset.from || 0 }, { v: +c.dataset.to, duration: 1.7 + i * .12, ease: 'power1.out', onUpdate() { c.textContent = this.targets()[0].v.toFixed(+c.dataset.d || 0).replace('.', EN ? '.' : ',') + (c.dataset.s || '') } }))
   } })
-  rv($$('.stats > div'), { yPercent: 28, autoAlpha: 0, filter: 'blur(8px)', stagger: .1 }, { trigger: '.stats', start: 'top 104%', end: 'top 62%' })
+  rv($$('.stats > div'), { yPercent: 28, autoAlpha: 0, stagger: .1 }, { trigger: '.stats', start: 'top 104%', end: 'top 62%' })
 
   // Portés par… : blocs qui montent, nets en arrivant, parallaxe interne
-  rv('.d-tall', { y: () => rem(11), scale: .93, autoAlpha: .2, filter: 'blur(14px)' }, { trigger: '.driven', start: 'top 100%', end: 'top 10%' })
-  rv('.d-wide', { y: () => rem(15), autoAlpha: .15, filter: 'blur(12px)' }, { trigger: '.driven', start: 'top 96%', end: 'top 14%' })
+  rv('.d-tall', { y: () => rem(11), scale: .93, autoAlpha: .2 }, { trigger: '.driven', start: 'top 100%', end: 'top 10%' })
+  rv('.d-wide', { y: () => rem(15), autoAlpha: .15 }, { trigger: '.driven', start: 'top 96%', end: 'top 14%' })
   rv('.d-intro', { y: () => rem(5), autoAlpha: 0 }, { trigger: '.driven', start: 'top 84%', end: 'top 28%' })
   $$('.pxw').forEach((w) => gsap.fromTo(w, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: w.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } }))
 
@@ -131,12 +129,12 @@ if (!RM) {
   gsap.from('.svc-st .mq', { autoAlpha: 0, scrollTrigger: { trigger: '.svc', start: 'top 92%', end: 'top 62%', scrub: true } })
 
   // Science
-  rv('.sci-r', { autoAlpha: 0, filter: 'blur(8px)' }, { trigger: '.science' })
-  rv('.pr-g', { autoAlpha: 0, y: () => rem(3), filter: 'blur(8px)' }, { trigger: '.science', start: 'top 64%', end: 'top 14%' })
+  rv('.sci-r', { autoAlpha: 0 }, { trigger: '.science' })
+  rv('.pr-g', { autoAlpha: 0, y: () => rem(3) }, { trigger: '.science', start: 'top 64%', end: 'top 14%' })
   rv($$('.steps li'), { autoAlpha: 0, y: () => rem(1.6), stagger: .08 }, { trigger: '.science', start: 'top 62%', end: 'top 6%' })
 
   // Avantages
-  $$('.ad').forEach((c, i) => rv(c, { y: () => rem(9 + i * 6), autoAlpha: .05, filter: 'blur(10px)' }, { trigger: '.adv-g', start: 'top 112%', end: `top ${58 - i * 5}%` }))
+  $$('.ad').forEach((c, i) => rv(c, { y: () => rem(9 + i * 6), autoAlpha: .05 }, { trigger: '.adv-g', start: 'top 112%', end: `top ${58 - i * 5}%` }))
 
   // Machine : le cadre s'ouvre, la carte de verre traverse l'image
   const mb = $('.mach-box'), gl = $('.m-gl')
@@ -151,8 +149,14 @@ if (!RM) {
     .to({}, { duration: .2 }, .8)
 
   // Galerie : les cartes montent puis la bande glisse avec le scroll
-  rv($$('.gt'), { autoAlpha: 0, y: () => rem(7), filter: 'blur(10px)', stagger: .1 }, { trigger: '.gal-w', start: 'top 104%', end: 'top 58%' })
-  { const t = $('.gal-t'); gsap.fromTo(t, { x: () => rem(4) }, { x: () => -(t.scrollWidth - innerWidth + rem(3)), ease: 'none', scrollTrigger: { trigger: '.gal-w', start: 'top bottom', end: 'bottom top', scrub: .7, invalidateOnRefresh: true } }) }
+  rv($$('.gt'), { autoAlpha: 0, y: () => rem(6), stagger: .06 }, { trigger: '.gal-sc', start: 'top 86%', end: 'top 20%' })
+  {
+    // La section s'arrête à l'écran le temps que la bande défile : chaque carte passe entièrement en vue
+    const sc = $('.gal-sc'), t = $('.gal-t'), travel = () => t.scrollWidth - innerWidth
+    const size = () => { sc.style.height = `${innerHeight + travel() / 1.25}px` }
+    size(); ScrollTrigger.addEventListener('refreshInit', size)
+    gsap.fromTo(t, { x: 0 }, { x: () => -travel(), ease: 'none', scrollTrigger: { trigger: sc, start: 'top top', end: 'bottom bottom', scrub: .5, invalidateOnRefresh: true } })
+  }
 
   // Nous trouver : la carte s'ouvre, les repères se posent
   gsap.from('.acc-map', { scale: .84, autoAlpha: .3, ease: 'none', scrollTrigger: { trigger: '.acc-wrap', start: 'top 100%', end: 'top 44%', scrub: .5 } })
@@ -160,7 +164,7 @@ if (!RM) {
   gsap.from('.pin-s > *, .acc-rt, .pin-d > *', { scale: 0, autoAlpha: 0, ease: 'none', stagger: .2, scrollTrigger: { trigger: '.acc-wrap', start: 'top 60%', end: 'top 26%', scrub: .5 } })
 
   // Équipe
-  rv($$('.tm'), { autoAlpha: 0, y: () => rem(4), filter: 'blur(9px)', stagger: .08 }, { trigger: '.tm-g', start: 'top 112%', end: 'top 70%' })
+  rv($$('.tm'), { autoAlpha: 0, y: () => rem(4), stagger: .08 }, { trigger: '.tm-g', start: 'top 112%', end: 'top 70%' })
 }
 
 /* ---------- Tarifs : la frise choisit la catégorie ---------- */
@@ -265,16 +269,16 @@ if (!RM) {
   })
 }
 
-ScrollTrigger.create({ trigger: '.ft', start: 'top 5%', end: 'bottom top', toggleClass: { targets: '.nav', className: 'on-dark' } })
+ScrollTrigger.create({ start: 24, end: 'max', toggleClass: { targets: '.nav', className: 'solid' } })
 
 /* ---------- Pied de page : le panneau s'ouvre, le logo s'écrit lettre par lettre ---------- */
 if (!RM) {
-  const box = $('.ft-box'), glyphs = $$('.ft-logo path')
+  const box = $('.ft-box')
   gsap.from(box, { scale: .84, y: () => rem(6), borderRadius: '6rem', ease: 'none', scrollTrigger: { trigger: '.ft', start: 'top 98%', end: 'top 18%', scrub: .5, invalidateOnRefresh: true } })
   rv(splitWords('.ft-h'), wordIn, { trigger: '.ft', start: 'top 62%', end: 'top 22%' })
   rv('.ft-cta', { autoAlpha: 0, x: () => rem(3) }, { trigger: '.ft', start: 'top 54%', end: 'top 18%' })
-  rv($$('.ft-cols > div'), { autoAlpha: 0, y: () => rem(3), filter: 'blur(6px)', stagger: .08 }, { trigger: '.ft', start: 'top 46%', end: 'top 10%' })
-  gsap.from(glyphs, { yPercent: 60, autoAlpha: 0, transformOrigin: '50% 100%', stagger: .03, ease: 'none', scrollTrigger: { trigger: '.ft', start: 'top 34%', end: () => `+=${Math.max(innerHeight * .24, ScrollTrigger.maxScroll(window) - $('.ft').offsetTop + innerHeight * .34 - 4)}`, scrub: .5, invalidateOnRefresh: true } })
+  rv($$('.ft-cols > div'), { autoAlpha: 0, y: () => rem(3), stagger: .08 }, { trigger: '.ft', start: 'top 46%', end: 'top 10%' })
+  gsap.fromTo('.ft-logo img', { clipPath: 'inset(-10% 100% -10% 0%)' }, { clipPath: 'inset(-10% 0% -10% 0%)', ease: 'none', scrollTrigger: { trigger: '.ft', start: 'top 34%', end: () => `+=${Math.max(innerHeight * .24, ScrollTrigger.maxScroll(window) - $('.ft').offsetTop + innerHeight * .34 - 4)}`, scrub: .5, invalidateOnRefresh: true } })
 }
 
 /* ---------- Curseur point ---------- */
@@ -312,8 +316,30 @@ document.fonts?.ready.then(() => ScrollTrigger.refresh())
 const openBooking = initBooking({ EN, RM, lenis, closures })
 if (location.hash === '#rendez-vous') openBooking()
 
+/* ---------- Clavier : flèches, espace, pages, début, fin, avec le même glissé que la molette ---------- */
+if (lenis) {
+  let held = 0
+  const nudge = (d) => lenis.scrollTo(lenis.targetScroll + d, { lerp: .1, programmatic: false })
+  const inGallery = () => { const r = $('.gal-sc').getBoundingClientRect(); return r.top <= 1 && r.bottom >= innerHeight - 1 }
+  addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey || lenis.isStopped || e.target.closest('input, textarea, select, [contenteditable="true"]')) return
+    const k = e.key, space = k === ' ' && !e.target.closest('button, summary')
+    const dir = k === 'ArrowDown' || (k === 'ArrowRight' && inGallery()) ? 1 : k === 'ArrowUp' || (k === 'ArrowLeft' && inGallery()) ? -1 : 0
+    if (dir) { e.preventDefault(); if (held !== dir) { held = dir; nudge(dir * innerHeight * .08) } }
+    else if (k === 'PageDown' || (space && !e.shiftKey)) { e.preventDefault(); nudge(innerHeight * .82) }
+    else if (k === 'PageUp' || (space && e.shiftKey)) { e.preventDefault(); nudge(-innerHeight * .82) }
+    else if (k === 'Home') { e.preventDefault(); lenis.scrollTo(0, { duration: 1.6 }) }
+    else if (k === 'End') { e.preventDefault(); lenis.scrollTo(lenis.limit, { duration: 1.6 }) }
+  })
+  const release = () => { held = 0 }
+  addEventListener('keyup', (e) => { if (e.key.startsWith('Arrow')) release() })
+  addEventListener('blur', release)
+  // Touche maintenue : avance à chaque image, sans attendre la répétition du système
+  gsap.ticker.add((_, dt) => { if (held) nudge(held * innerHeight * .0011 * dt) })
+}
+
 /* ---------- La page n'apparaît qu'une fois prête : styles, polices et états de départ posés ---------- */
-const fontsReady = Promise.all(["400 1em 'Inter Tight Variable'", "italic 400 1em 'Instrument Serif'"].map((f) => document.fonts.load(f)))
+const fontsReady = Promise.all([...["400 1em 'Inter Tight Variable'", "italic 400 1em 'Instrument Serif'"].map((f) => document.fonts.load(f)), $('.logo img').decode()])
 Promise.race([fontsReady, new Promise((r) => setTimeout(r, 1500))]).catch(() => {}).then(() => {
   document.documentElement.classList.remove('wait'); ScrollTrigger.refresh(); intro.play()
 })
