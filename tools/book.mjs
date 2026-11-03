@@ -25,9 +25,9 @@ for (const [url, w, h, tag] of [['/', 1440, 827, 'fr'], ['/en/', 1440, 827, 'en'
   await next(); await next(); console.log('sans date :', await txt('.bk-e'))
   // Règles du calendrier : dimanche, fériés, passé
   const off = (k) => p.$eval(`[data-d="${k}"]`, (e) => e.disabled)
-  console.log('2 nov (passé)', await off('2026-11-02'), '| 8 nov (dimanche)', await off('2026-11-08'), '| 11 nov (férié)', await off('2026-11-11'), '| 9 nov (lundi)', await off('2026-11-09'))
+  console.log('2 nov (passé)', await off('2026-11-02'), '| 8 nov (dimanche)', await off('2026-11-08'), '| 11 nov (férié)', await off('2026-11-11'), '| 9 nov (lundi fermé)', await off('2026-11-09'), '| 17 nov (mardi)', await off('2026-11-17'))
   const pick = async (k) => { await p.evaluate((x) => document.querySelector(`[data-d="${x}"]`).click(), k); await wait(50); return txt('.bk-sv li:first-child b') }
-  console.log('prix coupe : lundi 9 =', await pick('2026-11-09'), '| ven 13 =', await pick('2026-11-13'), '| mar 10, veille de férié =', await pick('2026-11-10'), '| mer 18 =', await pick('2026-11-18'))
+  console.log('prix coupe : mar 17 =', await pick('2026-11-17'), '| ven 13 =', await pick('2026-11-13'), '| mar 10, veille de férié =', await pick('2026-11-10'), '| mer 18 =', await pick('2026-11-18'))
   await p.evaluate(() => { for (let i = 0; i < 1; i++) document.querySelector('.bk-mn').click() }); console.log('mois suivant :', await txt('.bk-mt'), '| 25 déc', await off('2026-12-25'))
   await p.evaluate(() => document.querySelector('.bk-mp').click()); await pick('2026-11-18')
   await p.evaluate(() => { document.querySelector('[data-h="10:30"]').click(); [...document.querySelectorAll('.bk-c')].find((l) => l.textContent.trim() === 'Katarina').querySelector('input').click() })

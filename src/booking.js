@@ -62,7 +62,7 @@ export function initBooking({ EN, RM, lenis, closures }) {
   /* ---------- Calendrier et créneaux ---------- */
   const isOpen = (d) => {
     const now = nowBxl(), today = shift(now, 0), k = iso(d)
-    if (d < today || d > shift(today, AHEAD) || !d.getDay() || isHoliday(d) || closures.some((c) => k >= c.from && k <= c.to)) return false
+    if (d < today || d > shift(today, AHEAD) || d.getDay() < 2 /* dimanche, lundi */ || isHoliday(d) || closures.some((c) => k >= c.from && k <= c.to)) return false
     return k !== iso(now) || now.getHours() + NOTICE <= LAST
   }
   const paintCal = () => {
