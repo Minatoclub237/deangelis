@@ -9,6 +9,11 @@
 <link rel="icon" href="data:,">
 <link rel="alternate" hreflang="fr" href="https://deangeliscoiffure.com/">
 <link rel="alternate" hreflang="en" href="https://deangeliscoiffure.com/en/">
+<link rel="stylesheet" href="/src/style.css">
+<style>html{background:#fff}html.wait body{opacity:0}</style>
+<script>(function(r){r.classList.add('wait');setTimeout(function(){r.classList.remove('wait')},4000)})(document.documentElement)</script>
+<link rel="preload" as="image" href="/media/hero.webp" media="(min-width: 821px)">
+<link rel="preload" as="image" href="/media/hero-m.webp" media="(max-width: 820px)">
 <script type="module" src="/src/main.js"></script>
 </head>
 <body>
@@ -47,12 +52,15 @@
 <div class="notice" role="status" hidden><span></span><button type="button" aria-label="Close">×</button></div>
 
 <main>
-<!-- 01 — Mèche torsadée temps réel -->
+<!-- 01 — Vidéo en boucle -->
 <section class="hero" id="accueil">
-  <canvas id="lock" aria-hidden="true"></canvas>
+  <div class="hero-m" aria-hidden="true">
+    <picture><source media="(max-width: 820px)" srcset="/media/hero-m.webp"><img src="/media/hero.webp" alt="" fetchpriority="high"></picture>
+    <video class="hero-v" muted loop playsinline autoplay preload="auto"><source media="(max-width: 820px)" src="/media/hero-m.mp4" type="video/mp4"><source src="/media/hero.mp4" type="video/mp4"></video>
+  </div>
   <div class="hero-txt">
     <p class="lab upper scr">Hair &amp; beauty in Brussels</p>
-    <h1><span class="ln">Where style</span><span class="ln">meets elegance</span></h1>
+    <h1><span class="ln">Where style</span><span class="ln" data-em="1">meets elegance</span></h1>
     <p class="p">Custom cuts, colour and hair care, a short walk from Schuman.</p>
   </div>
   <div class="hero-btns">
@@ -61,7 +69,7 @@
   </div>
   <article class="hero-card">
     <b class="n">22</b>
-    <div><p class="lab b">Rue Franklin, 1000 Brussels</p><h2>Your salon in the heart of the European quarter</h2></div>
+    <div><p class="lab b">Rue Franklin, 1000 Brussels</p><h2 data-em="2">Your salon in the heart of the European quarter</h2></div>
     <p class="p">A salon for women, men and children: cuts, colour and highlights. “Always top quality. A welcoming, smiling team, always very professional, just like the owners.” Natalia, a client for over 16 years (translated from French).</p>
   </article>
 </section>
@@ -70,7 +78,7 @@
 
 <!-- 02 — Promesse + chiffres -->
 <section class="mission" id="mission">
-  <h2 class="h-xl rv"><span class="ln">A cut, a colour, a treatment:</span><span class="ln">every gesture is shaped around your style,</span><span class="ln"><g>made for you.</g></span></h2>
+  <h2 class="h-xl rv"><span class="ln">A cut, a colour, a treatment:</span><span class="ln" data-em="2">every gesture is shaped around your style,</span><span class="ln" data-em="2"><g>made for you.</g></span></h2>
   <p class="lab m-lab scr">De Angelis Coiffure, for you</p>
   <div class="stats">
     <div><b class="cnt" data-to="4.8" data-d="1">0</b><p class="scr">Average rating on Google</p></div>
@@ -89,7 +97,7 @@
     </figcaption>
   </figure>
   <div class="d-intro">
-    <p class="d-lead">The willingness to listen, the patience to understand, and just being there: that is beauty to us.</p>
+    <p class="d-lead" data-em="1">The willingness to listen, the patience to understand, and just being there: to us, that is beauty.</p>
     <a class="btn btn-d" href="#services">See our services</a>
   </div>
   <figure class="d-wide">
@@ -108,7 +116,7 @@
 </section>
 <!-- 05 — Tarifs : la frise choisit la catégorie -->
 <section class="science" id="tarifs">
-  <h2 class="h-xl rv"><span class="ln">Our prices,</span><span class="ln">clear and simple</span></h2>
+  <h2 class="h-xl rv"><span class="ln">Our prices,</span><span class="ln" data-em="1">clear and simple</span></h2>
   <div class="sci-r"><a class="btn btn-s" href="#rendez-vous">Book an appointment</a></div>
   <div class="pr-g">
     <div class="pr-ph"><img class="on" src="/img/s-long.webp" alt="Long, sleek copper hair" loading="lazy"><img class="" src="/img/s-foil.webp" alt="Highlights being applied at the salon" loading="lazy"><img class="" src="/img/s-work.webp" alt="A stylist working on a client at the salon" loading="lazy"><img class="" src="/img/s-shelves.webp" alt="The blue shelves of the salon, products and trophies" loading="lazy"><img class="" src="/img/s-men2.webp" alt="Sharp fade and trimmed beard at the salon" loading="lazy"><img class="" src="/img/s-curly2.webp" alt="Cut on curly hair, back view" loading="lazy"></div>
@@ -122,7 +130,7 @@
 <!-- 06 — Avantages -->
 <section class="adv" id="avantages">
   <p class="p adv-l scr">Your style, our expertise</p>
-  <h2 class="h-xl adv-t rv"><span class="ln">Why choose us</span></h2>
+  <h2 class="h-xl adv-t rv"><span class="ln" data-em="1">Why choose us</span></h2>
   <div class="adv-g">
     <article class="ad"><span class="chip">Benefits</span><svg class="ad-ar" viewBox="0 0 24 24"><path d="M3 21 21 3M7 3h14v14" fill="none" stroke="url(#g-arrow)" stroke-width="1.5"/></svg><h3>A warm, professional welcome</h3><div class="ad-b"><span class="ad-n">01</span><a class="chip" href="#avis">explore</a></div></article>
     <article class="ad"><span class="chip">Benefits</span><svg class="ad-ar" viewBox="0 0 24 24"><path d="M3 21 21 3M7 3h14v14" fill="none" stroke="url(#g-arrow)" stroke-width="1.5"/></svg><h3>A friendly atmosphere</h3><div class="ad-b"><span class="ad-n">02</span><a class="chip" href="#galerie">explore</a></div></article>
@@ -139,7 +147,7 @@
       <div class="m-top"><a class="chip white up" href="tel:+3227323222">Call the salon</a><a class="chip white up" href="https://www.google.com/maps/dir/?api=1&amp;destination=De+Angelis+Coiffure+%26+Beaut%C3%A9,+Rue+Franklin+22,+1000+Bruxelles" target="_blank" rel="noopener">Directions</a></div>
       <div class="m-bl">
         <div class="m-ch"><span class="chip white up">Women, men, children</span><span class="chip white up">European quarter</span></div>
-        <h2><span class="ln">A bright salon</span><span class="ln">in the heart of Brussels</span></h2>
+        <h2><span class="ln">A bright salon</span><span class="ln" data-em="1">in the heart of Brussels</span></h2>
       </div>
       <aside class="m-gl glass">
         <div class="m-gl-t"><div><p class="s">Opening hours</p><h3>Monday to Saturday</h3><p class="d">Sunday: closed. Annual closure in August.</p></div></div>
@@ -152,10 +160,10 @@
 
 <!-- 08 — Galerie : les réalisations glissent au scroll -->
 <section class="gal" id="galerie">
-  <div class="mq mq-xl mq-alt" data-items="De Angelis Coiffure|For you" data-o="60"></div>
+  <div class="mq mq-xl" data-items="De Angelis Coiffure|For you" data-o="60"></div>
   <div class="gal-h">
     <p class="p scr">Our work</p>
-    <h2 class="h-xl rv"><span class="ln">The work</span><span class="ln">speaks for itself</span></h2>
+    <h2 class="h-xl rv"><span class="ln">The work</span><span class="ln" data-em="*">speaks for itself</span></h2>
   </div>
   <div class="gal-w"><div class="gal-t">
     <figure class="gt"><div class="gt-i" style="--r:-2.5deg"><video class="vid" data-src="/media/v-before.mp4" poster="/media/v-before.webp" muted loop playsinline preload="none" aria-label="Before and after: transformation to bright blonde"></video><figcaption class="chip white">Before / after, bright blonde</figcaption></div></figure>
@@ -172,7 +180,7 @@
 </section>
 <!-- 09 — For the whole family -->
 <section class="team" id="pour-tous">
-  <div class="team-h"><h2 class="h-xl rv"><span class="ln">For the whole family</span></h2><div class="sci-nav"><button type="button" id="tm-prev" aria-label="Previous"><svg><use href="#i-prev"/></svg></button><button type="button" id="tm-next" aria-label="Next"><svg><use href="#i-next2"/></svg></button></div></div>
+  <div class="team-h"><h2 class="h-xl rv"><span class="ln" data-em="2">For the whole family</span></h2><div class="sci-nav"><button type="button" id="tm-prev" aria-label="Previous"><svg><use href="#i-prev"/></svg></button><button type="button" id="tm-next" aria-label="Next"><svg><use href="#i-next2"/></svg></button></div></div>
   <div class="tm-g">
     <article class="tm" tabindex="0"><img class="tm-ph" src="/img/s-ombre1.webp" alt="Ashy white ombré done at the salon" loading="lazy" style="object-position:50% 25%"><div class="tm-b"><h3>Women</h3><p class="r">Cut, colour, highlights</p><p class="t">Shampoo, cut and blow-dry from €37, Monday to Thursday.</p></div><div class="tm-gl"><h3>Women</h3><p class="r">Cut, colour, highlights</p><p class="t">Shampoo, cut and blow-dry from €37, Monday to Thursday.</p></div></article>
     <article class="tm" tabindex="0"><img class="tm-ph" src="/img/s-men1.webp" alt="Men's fade and beard done at the salon" loading="lazy" style="object-position:50% 25%"><div class="tm-b"><h3>Men</h3><p class="r">Cut and finish</p><p class="t">Shampoo, cut and blow-dry €28. Beard from €8.</p></div><div class="tm-gl"><h3>Men</h3><p class="r">Cut and finish</p><p class="t">Shampoo, cut and blow-dry €28. Beard from €8.</p></div></article>
@@ -187,7 +195,7 @@
     <div class="mq mq-v ts-mq" data-items="Thank you for your trust|Women, men, children|For you" data-o="30"></div>
     <div class="ts-h">
       <p class="p scr">What our clients say</p>
-      <h2 class="h-xl rv"><span class="ln">They say it</span><span class="ln">better than we can</span></h2>
+      <h2 class="h-xl rv"><span class="ln">They say it</span><span class="ln" data-em="*">better than we can</span></h2>
     </div>
     <div class="ts-sc">
       <b>4.8</b>
@@ -215,7 +223,7 @@
 <!-- 11 bis — Le mur d'avis -->
 <section class="tw" aria-label="More client reviews">
   <div class="tw-h">
-    <h3 class="h-xl rv"><span class="ln">Katarina, Alberto</span><span class="ln">and the whole team</span></h3>
+    <h3 class="h-xl rv"><span class="ln">Katarina, Alberto</span><span class="ln" data-em="2">and the whole team</span></h3>
     <p class="p">Excerpts from reviews published online. […] marks a cut.</p>
   </div>
   <div class="tw-g">
@@ -276,7 +284,7 @@
 
 <!-- 14 — Find us -->
 <section class="acc" id="acces">
-  <h2 class="h-xl rv"><span class="ln">Find us</span></h2>
+  <h2 class="h-xl rv"><span class="ln" data-em="*">Find us</span></h2>
   <div class="acc-wrap">
     <a class="acc-map" href="https://www.google.com/maps/dir/?api=1&amp;destination=De+Angelis+Coiffure+%26+Beaut%C3%A9,+Rue+Franklin+22,+1000+Bruxelles" target="_blank" rel="noopener" aria-label="Open directions to the salon in Google Maps">
       <span class="acc-in">
@@ -304,7 +312,7 @@
   <div class="ft-box">
     <div class="mq ft-mq" data-items="For you|Custom cuts|Colour and highlights" data-o="20"></div>
     <div class="ft-top">
-      <h2 class="ft-h"><span class="ln">Your next cut</span><span class="ln">starts here.</span></h2>
+      <h2 class="ft-h"><span class="ln">Your next cut</span><span class="ln" data-em="*">starts here.</span></h2>
       <div class="ft-cta">
         <a class="btn btn-w" href="#rendez-vous">Book an appointment</a>
         <a class="btn btn-l" href="tel:+3227323222">Call the salon</a>

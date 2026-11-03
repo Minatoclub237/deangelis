@@ -1,13 +1,11 @@
-import '@fontsource-variable/inter-tight'
-import './style.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
 import Lenis from 'lenis'
-import { initLock } from './lock.js'
 import { LOGO_FULL, LOGO_SHORT } from './logo.js'
 import { initBooking } from './booking.js'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, SplitText)
 document.querySelector('.logo').innerHTML = LOGO_FULL
 document.querySelector('.cel-t').innerHTML = LOGO_SHORT
 document.querySelector('.ft-logo').innerHTML = LOGO_SHORT
@@ -17,6 +15,16 @@ const EN = document.documentElement.lang === 'en'
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches
 const MOBILE = matchMedia('(max-width: 820px)').matches
 const rem = (n) => n * parseFloat(getComputedStyle(document.documentElement).fontSize)
+
+/* ---------- Titres : les derniers mots (data-em) passent en accent, quelle que soit la langue ---------- */
+$$('[data-em]').forEach((el) => {
+  const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let last, n
+  while ((n = tw.nextNode())) if (n.textContent.trim()) last = n
+  const words = last.textContent.trim().split(/\s+/), k = el.dataset.em === '*' ? words.length : +el.dataset.em
+  const accent = document.createElement('em'); accent.textContent = words.slice(-k).join(' ')
+  last.replaceWith(...(k < words.length ? [words.slice(0, -k).join(' ') + ' '] : []), accent)
+})
+const splitWords = (el) => SplitText.create(el, { type: 'words', mask: 'words', wordsClass: 'w' }).words
 
 /* ---------- Scroll natif lissé ---------- */
 const lenis = RM ? null : new Lenis({ lerp: .09 })
@@ -34,8 +42,8 @@ document.addEventListener('click', (e) => {
 
 /* ---------- Rubans : défilent au temps, accélèrent au scroll ---------- */
 const mqs = $$('.mq').map((el) => {
-  const items = el.dataset.items.split('|'), alt = el.classList.contains('mq-alt')
-  const group = (hidden) => `<div class="mq-g"${hidden ? ' aria-hidden="true"' : ''}>${items.map((w, i) => `<span${alt && i % 2 ? ' class="alt"' : ''}>${w}</span><svg class="mq-ic${alt && i % 2 ? ' alt' : ''}"><use href="#i-plus"/></svg><i class="mq-sl">/</i>`).join('')}</div>`
+  const items = el.dataset.items.split('|')
+  const group = (hidden) => `<div class="mq-g"${hidden ? ' aria-hidden="true"' : ''}>${items.map((w, i) => `<span${i % 2 ? ' class="alt"' : ''}>${w}</span><svg class="mq-ic${i % 2 ? ' alt' : ''}"><use href="#i-plus"/></svg><i class="mq-sl">/</i>`).join('')}</div>`
   el.innerHTML = `<div class="mq-t">${group()}${group(1)}</div>`
   return { t: $('.mq-t', el), el, x: -(+el.dataset.o || 0) * rem(.1), w: 0, on: true }
 })
@@ -47,8 +55,10 @@ const measureMq = () => mqs.forEach((m) => {
 measureMq(); document.fonts?.ready.then(measureMq); addEventListener('resize', measureMq)
 const mqIO = new IntersectionObserver((es) => es.forEach((e) => { const m = mqs.find((q) => q.el === e.target); if (m) m.on = e.isIntersecting }))
 mqs.forEach((m) => mqIO.observe(m.el))
+let lastY = scrollY
 if (!RM) gsap.ticker.add((_, dt) => {
-  const boost = Math.abs(lenis?.velocity || 0) * .3, base = dt * .054 * (innerWidth / 1000)
+  const y = scrollY, boost = Math.abs(y - lastY) * .3, base = dt * .054 * (innerWidth / 1000)
+  lastY = y
   mqs.forEach((m) => { if (!m.on || !m.w) return; m.x -= base + boost; if (-m.x >= m.w) m.x += m.w; m.t.style.transform = `translate3d(${m.x}px,0,0)` })
 })
 
@@ -65,28 +75,35 @@ $$('.scr').forEach((el) => {
   if (!el.closest('.hero')) ScrollTrigger.create({ trigger: el, start: 'top 94%', once: true, onEnter: () => scramble(el) })
 })
 
-/* ---------- Intro hero + mèche ---------- */
-const lock = initLock($('#lock'))
-if (RM) lock.uReveal.value = 1
+/* ---------- Intro hero : démarre quand la page est prête, la vidéo ne tourne que si elle est visible ---------- */
+const heroV = $('.hero-v')
+const intro = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } })
+if (RM) { heroV.removeAttribute('autoplay'); heroV.pause() }
 else {
-  gsap.to(lock.uReveal, { value: 1, duration: 2.1, ease: 'power1.inOut' })
-  gsap.timeline({ defaults: { ease: 'power3.out' } })
-    .from('.logo path', { x: () => -rem(.5), autoAlpha: 0, stagger: .025, duration: .6 }, 0)
-    .from('.nav-m, .nav-r', { autoAlpha: 0, duration: .7 }, .25)
-    .from('.hero h1 .ln', { yPercent: 70, autoAlpha: 0, filter: 'blur(12px)', scaleX: 1.14, transformOrigin: '0 50%', stagger: .13, duration: .95 }, .05)
-    .from('.hero-txt .p', { y: 16, autoAlpha: 0, filter: 'blur(7px)', duration: .8 }, .3)
-    .from('.hero .btn-o', { autoAlpha: 0, filter: 'blur(6px)', duration: .7 }, .4)
-    .from('.hero .btn-d', { autoAlpha: 0, x: () => rem(1.6), duration: .7 }, .55)
-    .from('.hero-card', { yPercent: 75, autoAlpha: .15, duration: 1.05 }, .28)
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) heroV.play().catch(() => {}); else heroV.pause() }).observe(heroV)
+  intro.from('.hero-m', { autoAlpha: 0, scale: 1.05, duration: 1.5 }, 0)
+    .from('.logo path', { x: () => -rem(.5), autoAlpha: 0, stagger: .025, duration: .6 }, .1)
+    .from('.nav-m, .nav-r', { autoAlpha: 0, duration: .7 }, .3)
+    .from(splitWords('.hero h1'), { yPercent: 118, rotation: 6, transformOrigin: '0 100%', color: '#b8733f', stagger: .07, duration: 1.1, ease: 'power4.out' }, .15)
+    .from('.hero-txt .p', { y: 16, autoAlpha: 0, duration: .8 }, .55)
+    .from('.hero-cta > *', { y: 14, autoAlpha: 0, stagger: .09, duration: .7 }, .7)
+    .from('.hero .btn-d', { autoAlpha: 0, x: () => rem(1.6), duration: .7 }, .85)
+    .from('.hero-card', { yPercent: 75, autoAlpha: .15, duration: 1.05 }, .45)
     .call(() => scramble($('.hero .scr'), .8), null, .1)
+  gsap.to('.hero-m', { yPercent: 9, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } })
 }
 
 /* ---------- Apparitions pilotées par le scroll (réversibles) ---------- */
 const rv = (target, vars, st = {}) => gsap.from(target, { ease: 'none', stagger: .12, ...vars, scrollTrigger: { trigger: target, start: 'top 96%', end: 'top 56%', scrub: .6, invalidateOnRefresh: true, ...st } })
-const blurIn = { yPercent: 75, autoAlpha: .05, filter: 'blur(14px)', scaleX: 1.12, transformOrigin: '0 50%' }
+const wordIn = { yPercent: 118, rotation: 6, transformOrigin: '0 100%', color: '#b8733f', stagger: .07 }
 
 if (!RM) {
-  $$('.rv').forEach((h) => rv($$('.ln', h), blurIn, { trigger: h }))
+  $$('.rv').forEach((h) => rv(splitWords(h), wordIn, { trigger: h, start: 'top 94%', end: 'top 58%' }))
+  // Phrases : les mots se remplissent au fil du scroll
+  const fill = (el, st) => gsap.from(SplitText.create(el, { type: 'words', wordsClass: 'w' }).words, { opacity: .14, stagger: .06, ease: 'none', scrollTrigger: { scrub: .6, ...st } })
+  fill('.d-lead', { trigger: '.d-lead', start: 'top 96%', end: 'top 60%' })
+  // Les cartes montent de loin sur ordinateur : leur position de départ fausserait un repère posé sur le titre
+  $$('.ad h3').forEach((el) => fill(el, MOBILE ? { trigger: el, start: 'top 100%', end: 'top 60%' } : { trigger: '.adv-g', start: 'top 78%', end: 'top 38%' }))
 
   // Mission : compteurs + orbites qui s'ouvrent
   ScrollTrigger.create({ trigger: '.stats', start: 'top 92%', once: true, onEnter() {
@@ -135,11 +152,11 @@ if (!RM) {
 
   // Galerie : les cartes montent puis la bande glisse avec le scroll
   rv($$('.gt'), { autoAlpha: 0, y: () => rem(7), filter: 'blur(10px)', stagger: .1 }, { trigger: '.gal-w', start: 'top 104%', end: 'top 58%' })
-  if (!MOBILE) { const t = $('.gal-t'); gsap.fromTo(t, { x: () => rem(4) }, { x: () => -(t.scrollWidth - innerWidth + rem(3)), ease: 'none', scrollTrigger: { trigger: '.gal-w', start: 'top bottom', end: 'bottom top', scrub: .7, invalidateOnRefresh: true } }) }
+  { const t = $('.gal-t'); gsap.fromTo(t, { x: () => rem(4) }, { x: () => -(t.scrollWidth - innerWidth + rem(3)), ease: 'none', scrollTrigger: { trigger: '.gal-w', start: 'top bottom', end: 'bottom top', scrub: .7, invalidateOnRefresh: true } }) }
 
   // Nous trouver : la carte s'ouvre, les repères se posent
   gsap.from('.acc-map', { scale: .84, autoAlpha: .3, ease: 'none', scrollTrigger: { trigger: '.acc-wrap', start: 'top 100%', end: 'top 44%', scrub: .5 } })
-  if (!MOBILE) gsap.from('.acc-c', { x: () => rem(9), autoAlpha: 0, ease: 'none', scrollTrigger: { trigger: '.acc-wrap', start: 'top 72%', end: 'top 34%', scrub: .5, invalidateOnRefresh: true } })
+  gsap.from('.acc-c', { x: () => rem(9), autoAlpha: 0, ease: 'none', scrollTrigger: { trigger: '.acc-wrap', start: 'top 72%', end: 'top 34%', scrub: .5, invalidateOnRefresh: true } })
   gsap.from('.pin-s > *, .acc-rt, .pin-d > *', { scale: 0, autoAlpha: 0, ease: 'none', stagger: .2, scrollTrigger: { trigger: '.acc-wrap', start: 'top 60%', end: 'top 26%', scrub: .5 } })
 
   // Équipe
@@ -149,7 +166,7 @@ if (!RM) {
 /* ---------- Tarifs : la frise choisit la catégorie ---------- */
 const steps = $$('.steps li'); let sI = 0
 const pts = $$('.pt'), phs = $$('.pr-ph img')
-const setStep = (i) => { sI = (i + steps.length) % steps.length; [steps, pts, phs].forEach((l) => l.forEach((s, k) => s.classList.toggle('on', k === sI))) }
+const setStep = (i) => { sI = (i + steps.length) % steps.length; [steps, pts, phs].forEach((l) => l.forEach((s, k) => s.classList.toggle('on', k === sI))); if (!RM) gsap.fromTo($$('.pt.on li'), { autoAlpha: 0, x: () => -rem(.8) }, { autoAlpha: 1, x: 0, stagger: .025, duration: .5, ease: 'power3.out', overwrite: true, clearProps: 'all' }) }
 steps.forEach((s, i) => { s.addEventListener('mouseenter', () => setStep(i)); s.addEventListener('click', () => setStep(i)) })
 $('#sci-prev').onclick = () => setStep(sI - 1); $('#sci-next').onclick = () => setStep(sI + 1)
 
@@ -165,6 +182,7 @@ const tmAnim = (el, on) => {
 const setTm = (i) => { if (i === tI) return; if (tI >= 0) tmAnim(tms[tI], false); tI = i; if (i >= 0) { tmAnim(tms[i], true); gsap.set(tms, { zIndex: 0 }); gsap.set(tms[i], { zIndex: 2 }) } }
 tms.forEach((t, i) => { t.addEventListener('mouseenter', () => setTm(i)); t.addEventListener('focus', () => setTm(i)); t.addEventListener('click', () => setTm(i)) })
 $('.tm-g').addEventListener('mouseleave', () => setTm(-1))
+if (MOBILE && !RM) tms.forEach((t, i) => ScrollTrigger.create({ trigger: t, start: 'top 60%', end: 'bottom 30%', onToggle: (s) => { if (s.isActive) setTm(i); else if (tI === i) setTm(-1) } }))
 $('#tm-prev').onclick = () => setTm(((tI < 0 ? 0 : tI) - 1 + tms.length) % tms.length); $('#tm-next').onclick = () => setTm((tI + 1) % tms.length)
 
 /* ---------- Cellules : boîte de Petri dessinée + vol au scroll ---------- */
@@ -201,6 +219,8 @@ $('#tm-prev').onclick = () => setTm(((tI < 0 ? 0 : tI) - 1 + tms.length) % tms.l
 /* ---------- Contact ---------- */
 const ctT = $('.ct-t'), letters = [...ctT.textContent]
 ctT.innerHTML = letters.map((l) => `<span aria-hidden="true">${l}</span>`).join('')
+const ctMix = gsap.utils.interpolate('#16303a', '#b8733f')
+$$('span', ctT).forEach((s, i, a) => { s.style.color = ctMix(i / (a.length - 1)) })
 if (!RM) {
   const sp = $$('span', ctT), n = sp.length
   gsap.from(sp, { autoAlpha: 0, filter: 'blur(9px)', x: (i) => (i - n * .3) * rem(.75), ease: 'none', stagger: .045, scrollTrigger: { trigger: '.contact', start: 'top 92%', end: 'top 42%', scrub: .6, invalidateOnRefresh: true } })
@@ -217,26 +237,31 @@ $('.ct-f').addEventListener('submit', (e) => {
 })
 
 /* ---------- Avis : les cartes montent, pivotent et se distribuent ---------- */
-if (!RM && !MOBILE) {
-  const tc = $$('.tc'), dx = () => rem(20.9), tRot = [[-16, -4.5], [11, 1.5], [-9, 4.5]]
+if (!RM) {
+  // Sur téléphone, le paquet reste groupé : trois cartes ne tiennent pas côte à côte
+  const tc = $$('.tc'), dx = () => rem(MOBILE ? 1 : 20.9), gap = MOBILE ? .85 : .55, fan = .65 + gap * 2, tRot = [[-16, -4.5], [11, 1.5], [-9, 4.5]]
   gsap.set('.ts-mq', { autoAlpha: 0 })
   const ttl = gsap.timeline({ scrollTrigger: { trigger: '.ts', start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true }, defaults: { ease: 'none' } })
   ttl.to('.ts-mq', { autoAlpha: 1, duration: .25 }, 0)
   tc.forEach((c, i) => {
     gsap.set(c, { y: () => innerHeight, rotation: tRot[i][0] })
-    ttl.to(c, { y: () => rem(i === 1 ? -.8 : .4), rotation: i === 1 ? -2 : (i ? 5 : -6), duration: .8, ease: 'power2.out' }, .1 + i * .55)
-    ttl.to(c, { x: () => (i - 1) * dx(), rotation: tRot[i][1], duration: .7, ease: 'power2.inOut' }, 1.75)
+    ttl.to(c, { y: () => rem(i === 1 ? -.8 : .4), rotation: i === 1 ? -2 : (i ? 5 : -6), duration: .8, ease: 'power2.out' }, .1 + i * gap)
+    ttl.to(c, { x: () => (i - 1) * dx(), rotation: tRot[i][1], ...(MOBILE ? { y: () => -(2 - i) * rem(1.8) } : {}), duration: .7, ease: 'power2.inOut' }, fan)
   })
-  ttl.to('.tc-sign', { y: () => -rem(1), duration: .7 }, 1.75).to({}, { duration: .4 }, 2.45)
+  if (!MOBILE) ttl.to('.tc-sign', { y: () => -rem(1), duration: .7 }, fan)
+  ttl.to({}, { duration: .4 }, fan + .7)
   rv('.ts-sc', { autoAlpha: 0, y: () => rem(2) }, { trigger: '.ts', start: 'top 70%', end: 'top 10%' })
 }
 
-/* ---------- Mur d'avis : trois colonnes, trois vitesses ---------- */
-if (!RM && !MOBILE) {
+/* ---------- Mur d'avis : trois vitesses, en colonnes sur ordinateur, en bandes sur téléphone ---------- */
+if (!RM) {
   $$('.tw-c').forEach((c, i) => {
-    const d = [2.5, 8, 4.5][i]
-    gsap.fromTo(c, { y: () => rem(d) }, { y: () => -rem(d), ease: 'none', scrollTrigger: { trigger: '.tw-g', start: 'top bottom', end: 'bottom top', scrub: .6, invalidateOnRefresh: true } })
-    $$('.tq', c).forEach((q, k) => gsap.from(q, { autoAlpha: 0, rotation: (i + k) % 2 ? 3 : -3, scale: .94, filter: 'blur(6px)', ease: 'none', scrollTrigger: { trigger: q, start: 'top 98%', end: 'top 74%', scrub: .6 } }))
+    const d = [2.5, 8, 4.5][i], st = { start: 'top bottom', end: 'bottom top', scrub: .6, invalidateOnRefresh: true }
+    if (MOBILE) {
+      const left = () => -(c.scrollWidth - innerWidth + rem(1.6)), right = () => rem(1.6)
+      gsap.fromTo(c, { x: i % 2 ? left : right }, { x: i % 2 ? right : left, ease: 'none', scrollTrigger: { trigger: c, ...st } })
+    } else gsap.fromTo(c, { y: () => rem(d) }, { y: () => -rem(d), ease: 'none', scrollTrigger: { trigger: '.tw-g', ...st } })
+    $$('.tq', c).forEach((q, k) => gsap.from(q, { autoAlpha: 0, rotation: (i + k) % 2 ? 3 : -3, scale: .94, ease: 'none', scrollTrigger: { trigger: q, start: 'top 98%', end: 'top 74%', scrub: .6 } }))
   })
 }
 
@@ -246,7 +271,7 @@ ScrollTrigger.create({ trigger: '.ft', start: 'top 5%', end: 'bottom top', toggl
 if (!RM) {
   const box = $('.ft-box'), glyphs = $$('.ft-logo path')
   gsap.from(box, { scale: .84, y: () => rem(6), borderRadius: '6rem', ease: 'none', scrollTrigger: { trigger: '.ft', start: 'top 98%', end: 'top 18%', scrub: .5, invalidateOnRefresh: true } })
-  rv($$('.ft-h .ln'), blurIn, { trigger: '.ft', start: 'top 62%', end: 'top 22%' })
+  rv(splitWords('.ft-h'), wordIn, { trigger: '.ft', start: 'top 62%', end: 'top 22%' })
   rv('.ft-cta', { autoAlpha: 0, x: () => rem(3) }, { trigger: '.ft', start: 'top 54%', end: 'top 18%' })
   rv($$('.ft-cols > div'), { autoAlpha: 0, y: () => rem(3), filter: 'blur(6px)', stagger: .08 }, { trigger: '.ft', start: 'top 46%', end: 'top 10%' })
   gsap.from(glyphs, { yPercent: 60, autoAlpha: 0, transformOrigin: '50% 100%', stagger: .03, ease: 'none', scrollTrigger: { trigger: '.ft', start: 'top 34%', end: () => `+=${Math.max(innerHeight * .24, ScrollTrigger.maxScroll(window) - $('.ft').offsetTop + innerHeight * .34 - 4)}`, scrub: .5, invalidateOnRefresh: true } })
@@ -286,3 +311,9 @@ document.fonts?.ready.then(() => ScrollTrigger.refresh())
 /* ---------- Rendez-vous ---------- */
 const openBooking = initBooking({ EN, RM, lenis, closures })
 if (location.hash === '#rendez-vous') openBooking()
+
+/* ---------- La page n'apparaît qu'une fois prête : styles, polices et états de départ posés ---------- */
+const fontsReady = Promise.all(["400 1em 'Inter Tight Variable'", "italic 400 1em 'Instrument Serif'"].map((f) => document.fonts.load(f)))
+Promise.race([fontsReady, new Promise((r) => setTimeout(r, 1500))]).catch(() => {}).then(() => {
+  document.documentElement.classList.remove('wait'); ScrollTrigger.refresh(); intro.play()
+})

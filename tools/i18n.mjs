@@ -102,7 +102,7 @@ const T = [
   ['Une coupe, une couleur, un soin :', 'A cut, a colour, a treatment:'], ['chaque geste est pensé pour votre style,', 'every gesture is shaped around your style,'], ['juste pour vous. For you.', 'made for you.'], ['De Angelis Coiffure, for you', 'De Angelis Coiffure, for you'],
   ['Note moyenne sur Google', 'Average rating on Google'], ['Recommandé sur Facebook (23 avis)', 'Recommended on Facebook (23 reviews)'], ["Années de fidélité d'une de nos clientes", 'Years of loyalty from one of our clients'], ['Cité par La Libre parmi les coiffeurs « kids friendly » de Bruxelles', 'Named by La Libre among the kid-friendly hairdressers of Brussels'],
  ['Voir la galerie', 'See the gallery'],
-  ["Écouter, prendre le temps de comprendre, soutenir, être là : pour nous, c'est ça, la beauté.", 'The willingness to listen, the patience to understand, and just being there: that is beauty to us.'],
+  ["Écouter, prendre le temps de comprendre, soutenir, être là : pour nous, c'est ça, la beauté.", 'The willingness to listen, the patience to understand, and just being there: to us, that is beauty.'],
   ['Voir les services', 'See our services'],
   ['data-items="Nos services|Dames, hommes, enfants|Rue Franklin 22"', 'data-items="Our services|Women, men, children|Rue Franklin 22"'],
   ['Carré cuivré vu de profil', 'Copper bob, side view'], ['Coupes sur mesure', 'Custom cuts'], ['>Réserver<', '>Book<'], ['Couleurs et mèches', 'Colour and highlights'],
