@@ -16,7 +16,7 @@ await p.evaluateOnNewDocument(() => {
   const tick = () => {
     const h = document.documentElement, body = document.body
     if (body) {
-      const visible = getComputedStyle(body).opacity === '1', h1 = document.querySelector('.hero h1'), word = h1 && h1.querySelector('.w'), hero = document.querySelector('.hero')
+      const visible = !h.classList.contains('wait'), h1 = document.querySelector('.hero h1'), word = h1 && h1.querySelector('.w'), hero = document.querySelector('.hero')
       if (visible && !window.__first) window.__first = { t: Math.round(performance.now()), styles: hero && getComputedStyle(hero).position === 'relative', police: document.fonts.check("400 16px 'Inter Tight Variable'"), accent: document.fonts.check("italic 400 16px 'Instrument Serif'"), motsSepares: !!word, departPose: word && getComputedStyle(word).transform !== 'none' }
       window.__seen = (window.__seen || 0) + (visible ? 0 : 1)
     }

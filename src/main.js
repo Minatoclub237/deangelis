@@ -73,13 +73,9 @@ $$('.scr').forEach((el) => {
 })
 
 /* ---------- Intro hero : démarre quand la page est prête, la vidéo ne tourne que si elle est visible ---------- */
-const heroV = $('.hero-v')
 const intro = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } })
-if (RM) { heroV.removeAttribute('autoplay'); heroV.pause() }
-else {
-  new IntersectionObserver(([e]) => { if (e.isIntersecting) heroV.play().catch(() => {}); else heroV.pause() }).observe(heroV)
-  intro.from('.hero-m', { autoAlpha: 0, scale: 1.05, duration: 1.5 }, 0)
-    .from('.logo', { x: () => -rem(.5), autoAlpha: 0, duration: .7 }, .1)
+if (!RM) {
+  intro.fromTo('.hero-m', { scale: 1.05 }, { scale: 1, duration: 1.8 }, 0)
     .from('.menu a', { y: -8, autoAlpha: 0, stagger: .04, duration: .5 }, .35)
     .from('.nav-m, .nav-r', { autoAlpha: 0, duration: .7 }, .3)
     .from(splitWords('.hero h1'), { yPercent: 118, rotation: 6, transformOrigin: '0 100%', color: '#b8733f', stagger: .07, duration: 1.1, ease: 'power4.out' }, .15)
@@ -289,6 +285,12 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !RM) {
   document.addEventListener('pointerover', (e) => gsap.to(cur, { scale: e.target.closest('a,button,input,textarea,.tm,.steps li') ? 1.5 : 1, duration: .25 }))
 }
 
+/* ---------- Affiches et photos de la galerie : chargées à l'approche, pas au démarrage ---------- */
+const posterIn = (v) => { if (v.dataset.poster && !v.poster) v.poster = v.dataset.poster }
+const pIO = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { posterIn(e.target); pIO.unobserve(e.target) } }), { rootMargin: '120% 0px' })
+$$('.vid').forEach((v) => pIO.observe(v))
+new IntersectionObserver(([e], o) => { if (!e.isIntersecting) return; $$('.gal-t img').forEach((i) => { i.loading = 'eager' }); $$('.gal-t video').forEach(posterIn); o.disconnect() }, { rootMargin: '150% 0px' }).observe($('.gal-sc'))
+
 /* ---------- Vidéos : chargées à l'approche, jouées seulement quand elles sont visibles ---------- */
 if (!RM) {
   const vIO = new IntersectionObserver((es) => es.forEach((e) => {
@@ -338,8 +340,11 @@ if (lenis) {
   gsap.ticker.add((_, dt) => { if (held) nudge(held * innerHeight * .0011 * dt) })
 }
 
-/* ---------- La page n'apparaît qu'une fois prête : styles, polices et états de départ posés ---------- */
-const fontsReady = Promise.all([...["400 1em 'Inter Tight Variable'", "italic 400 1em 'Instrument Serif'"].map((f) => document.fonts.load(f)), $('.logo img').decode()])
-Promise.race([fontsReady, new Promise((r) => setTimeout(r, 1500))]).catch(() => {}).then(() => {
-  document.documentElement.classList.remove('wait'); ScrollTrigger.refresh(); intro.play()
+/* ---------- L'image du hero s'affiche d'abord ; le texte attend ses polices, sans jamais bloquer la page ---------- */
+let shown = false
+const fontsReady = Promise.all(["400 1em 'Inter Tight Variable'", "italic 400 1em 'Instrument Serif'"].map((f) => document.fonts.load(f))).finally(() => { if (shown) ScrollTrigger.refresh() })
+Promise.race([fontsReady, new Promise((r) => setTimeout(r, 700))]).catch(() => {}).then(() => {
+  shown = true; document.documentElement.classList.remove('wait'); ScrollTrigger.refresh(); intro.play()
+  // La vidéo démarre après le reste : son image d'attente est identique à sa première image
+  if (!RM) { const v = $('.hero-v'); new IntersectionObserver(([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause() }).observe(v) }
 })
